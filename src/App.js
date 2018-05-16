@@ -51,7 +51,7 @@ class App extends Component {
           <Route path="/friendflow" render={() => <FriendFlow model={modelInstance} currentUser={this.state.currentUser}/>}/>
           <Route path="/profile" render={() => <Profile model={modelInstance} currentUser={this.state.currentUser}/>}/>
           <Route path="/otherProfile" render={() => <OtherProfile model={modelInstance} currentUser={this.state.currentUser}/>}/>
-          <Route path="/edit" render={() => <EditProfile model={modelInstance} currentUser={this.state.currentUser}/>}/>
+          {/*<Route path="/edit" render={() => <EditProfile model={modelInstance} currentUser={this.state.currentUser}/>}/>*/}
 
         </header>
       </div>

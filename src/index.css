@@ -167,6 +167,22 @@ transform: translate(-50%, -50%);
 
 .jumbotron {
 	background-color: white;
+	height: 1000px;
+}
+
+#logInButton {
+	height: 60px;
+	width: 40%;
+	background-color: #c8d9ec;
+	border-radius: 5px;
+	padding: 10px;
+	color: black;
+	font-size: 25px;
+	font-weight: bold;
+	margin-top: 100px;
+}
+
+.Welcome {
 	height: 100%;
 }
 
@@ -307,6 +323,7 @@ div ~ .exploreSmallYoutube + .exploreSmallYoutube:hover {
 	background-color: #3a3a3a;
 	color: #d6d6d6;
 	border: 0.5px solid #262626;
+	margin-bottom: 30px;
 }
 
 #myModalLabel{
@@ -362,6 +379,7 @@ div ~ .exploreSmallYoutube + .exploreSmallYoutube:hover {
 .exploreChosenYoutube{
 	border: 0.5px solid #262626;
 	margin-right: 3px;
+	margin-top: 25px;
 }
 
 .promotedArea{

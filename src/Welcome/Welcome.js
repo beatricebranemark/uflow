@@ -21,12 +21,12 @@ class Welcome extends Component {
               <img className="img-responsive welcomeLogo" src={logo} alt="logo"/>
               <br/>
 
-              <button className="actionButton" onClick={() => modelInstance.googleLogin()}>Sign up with Google</button>
+              <button id="logInButton" onClick={() => modelInstance.googleLogin()}>Log in with Google</button>
 
-              <p id="or">OR</p>
+              {/*<p id="or">OR</p>
               <Link to="/explore">
                   <button className="actionButton">Log in</button>
-              </Link>
+              </Link>*/}
             </div>
           </div>
         </div>

@@ -135,7 +135,9 @@ modalVideo(event) {
         <div className="col-md-10">
           <div className="row" id="profileNamePictureArea">
             <div className="col-md-6">
-              <h3 id="profileName"> {username} <Link to="/edit"><span className="glyphicon glyphicon-cog"></span></Link></h3>
+              <h3 id="profileName"> {username}
+                {/*<Link to="/edit"><span className="glyphicon glyphicon-cog"></span></Link>*/}
+              </h3>
             </div>
 
             <div className="ProfilePictureArea col-md-5">
