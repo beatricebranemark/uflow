@@ -83,7 +83,7 @@ class Navbar extends Component {
                 <a href="/explore"><i className="material-icons">explore</i></a>
                 <a href="/friendflow"><i className="material-icons">people</i></a>
                 <a href="/profile"><i className="material-icons">person</i></a>
-                <Link to="/"><i className="material-icons" onClick={() => modelInstance.googleLogout("hej")}>settings_power</i></Link>
+                <Link to="/"><button className="LogOut" onClick={() => modelInstance.googleLogout("hej")}>Log out</button></Link>
               </div>
             </div>
           </nav>
