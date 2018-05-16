@@ -149,7 +149,7 @@ handleChangeDescription(event) {
     }
     var video = document.createElement("iframe");
     var index = event.target.attributes.getNamedItem("index").value;
-    var src = this.state.profile_videos[index];
+    var src = this.state.FlowVertical_videos[index];
     video.src = src;
     this.setState({
       currentVideo: src})
