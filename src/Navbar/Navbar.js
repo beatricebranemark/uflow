@@ -55,6 +55,12 @@ class Navbar extends Component {
     this.state.filter = event.target.value;
   }
 
+  handleLocation() {
+    if (window.location.pathname !== "/explore") {
+      window.location = "explore";
+    }
+  }
+
   render() {
     return (
       <div className="Navbar">
@@ -69,7 +75,7 @@ class Navbar extends Component {
 
               <form className="navbar-form navbar-left" onSubmit={this.handleSearch} onClick={() => modelInstance.setAllUsers(this.state.users)}>
                 <a className="navbar-brand" href="/explore"><img src={NavLogo} id="logo" alt="logo"/></a>
-                <div className="input-group">
+                <div className="input-group" onClick={this.handleLocation}>
                   <input type="text" className="form-control" placeholder="Search for a video or a user" onChange={this.handleFilter} name="search" />
                   <div className="input-group-btn">
                     <button className="btn btn-default" type="submit" value="Submit">
@@ -79,7 +85,7 @@ class Navbar extends Component {
                 </div>
               </form>
 
-              <div className="navbarIcons">
+              <div className="navbarIcons navbar-right">
                 <a href="/explore"><i className="material-icons">explore</i></a>
                 <a href="/friendflow"><i className="material-icons">people</i></a>
                 <a href="/profile"><i className="material-icons">person</i></a>

@@ -191,7 +191,7 @@ handleChangeDescription(event) {
                 <div className="youtubePost">
                 <div className="friendFlowArea">
                   <div className="youtubePostHead row">
-                    <img id="profilePictureSmall" className="col-md-6" src={this.state.FlowVertical_pics[i]} alt="FlowVerticalPictureSmall" />
+                    <img className="col-md-6 profilePictureSmall" src={this.state.FlowVertical_pics[i]} alt="FlowVerticalPictureSmall" />
                     <Link to="/otherProfile" className="clickableUsername"><h2 className="col-md-6" id={this.state.navigate_id[i]} onClick={this.navigateToUser}>{this.state.usernames[i]}<p></p><p className="postText">{this.state.texts[i]}</p></h2></Link>
                   </div>
 

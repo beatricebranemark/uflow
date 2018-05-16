@@ -88,6 +88,7 @@ const Model = function () {
     updates['/shares/' + id + '/videos/' + newShareKey] = video;
     updates['/shares/' + id + '/texts/' + newShareKey] = text;
     firebase.database().ref().update(updates);
+    window.location = 'profile';
   }
 
   this.follow = function(user_id, follow_id) {
@@ -149,6 +150,7 @@ this.removeShare = function(user_id, video, text) {
               if (videos.val() === video && snapshot.val() === text) {
                 firebase.database().ref('/shares/' + user_id + '/texts/' + key).remove();
                 firebase.database().ref('shares/'+ user_id + '/videos/' + key).remove();
+                window.location = 'profile';
               }
             })
           }

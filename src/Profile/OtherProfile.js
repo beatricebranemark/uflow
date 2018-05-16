@@ -168,7 +168,7 @@ class OtherProfile extends Component {
                 <div>
                 <div className="youtubePost">
                   <div className="youtubePostHead row">
-                    <img id="profilePictureSmall" className="col-md-6" src={profile_pic} alt="profilePictureSmall" />
+                    <img className="col-md-6 profilePictureSmall" src={profile_pic} alt="profilePictureSmall" />
                     <h2 className="col-md-6">{username}<p></p><p className="postText">{this.state.texts[i]}</p></h2>
                   </div>
 

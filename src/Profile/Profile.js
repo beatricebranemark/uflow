@@ -171,7 +171,7 @@ modalVideo(event) {
                   <div>
                     <div className="youtubePost">
                       <div className="youtubePostHead row">
-                        <img id="profilePictureSmall" className="col-md-6" src={profile_pic} alt="profilePictureSmall" />
+                        <img className="col-md-6 profilePictureSmall" src={profile_pic} alt="profilePictureSmall" />
                         <h2 className="col-md-6">{username}<p></p><p className="postText">{this.state.texts[i]}</p></h2>
                       </div>
                       <button className="removeShareButton" onClick={() => modelInstance.removeShare(this.state.currentUser.id, link, this.state.texts[i])}>X</button>
