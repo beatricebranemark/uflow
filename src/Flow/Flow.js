@@ -158,6 +158,17 @@ render() {
   //var userObject = {};
   var index;
 
+  // var 
+  // if (this.state > 0) {
+  //   return (
+  //     <div>
+  //
+  //     </div>
+  //   )
+  // }
+  // return (
+  //   <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" />
+  // )
 
   this.state.allUsers.map((id, i) => {
     if (modelInstance.getFilter()) {

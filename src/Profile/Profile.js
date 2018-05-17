@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom';
 import NavBar from "../Navbar/Navbar";
 import { modelInstance } from '../data/model';
 import firebase from 'firebase';
+<<<<<<< Updated upstream
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+=======
+import FileUpload from './FileUpload';
+>>>>>>> Stashed changes
 
 class Profile extends Component {
 
@@ -157,9 +161,16 @@ modalVideo(event) {
         var ID = currentUser.id;
       }
 
-      return (
-        <div className="Profile">
-          <NavBar />
+  return (
+    <div className="Profile">
+      <NavBar />
+        <div className="col-md-10">
+          <div className="row" id="profileNamePictureArea">
+            <div className="col-md-6">
+              <h3 id="profileName"> {username}
+                <FileUpload><span className="glyphicon glyphicon-plus"></span></FileUpload>
+              </h3>
+            </div>
 
           <div className="col-md-2">
           </div>
