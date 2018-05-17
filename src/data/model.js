@@ -184,7 +184,7 @@ this.googleLogout = function() {
     // An error happened.
   });
 }
-var currentUser = null;
+
 this.handleFileSelect = function(evt) {
   var storage = firebase.storage();
   var storageRef = firebase.storage().ref();
@@ -193,12 +193,13 @@ this.handleFileSelect = function(evt) {
   evt.preventDefault();
   var file = evt.target.files[0];
   console.log(file);
+  var userId = this.getCurrentUser();
   var metadata = {
     'contentType': file.type
   };
   // Push to child path.
   // [START oncomplete]
-  storageRef.child('images/' + currentUser + '/' + file.name).put(file, metadata).then(function(snapshot) {
+  storageRef.child('images/' + userId + '/' + file.name).put(file, metadata).then(function(snapshot) {
     console.log('Uploaded', snapshot.totalBytes, 'bytes.');
     console.log('File metadata:', snapshot.metadata);
   }).catch(function(error) {
@@ -207,6 +208,16 @@ this.handleFileSelect = function(evt) {
     // [END onfailure]
   });
   // [END oncomplete]
+}
+
+var currentUser = null;
+
+this.setCurrentUser = function(id) {
+  currentUser = id;
+}
+
+this.getCurrentUser = function() {
+  return currentUser;
 }
 
 // API Calls

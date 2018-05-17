@@ -44,6 +44,16 @@ class Flow extends Component {
     })
   }
 
+  componentDidUpdate() {
+    if (this.state.status === 'INITIAL' && this.state.resultyt.length !== 0) {
+      setTimeout(() => {
+        this.setState({
+          status: 'LOADED'
+        })
+      }, 7000)
+    }
+  }
+
 
   componentWillUnmount() {
     this.props.model.removeObserver(this);
@@ -71,7 +81,6 @@ class Flow extends Component {
         }
       })
       this.setState({
-        status: 'LOADED',
         resultyt: videoList,
       })
     }).catch(() => {
@@ -149,6 +158,11 @@ navigateToUser(event) {
   this.props.model.setProfileUser(event.target.id);
 }
 
+replaceThumbnail(link, i) {
+  var iframe = document.getElementById("iframeImg" + i);
+  iframe.innerHTML = '<iframe className="row" width="270px" height"150px" src="' + link + '" frameBorder="0" allowFullScreen></iframe>';
+}
+
 
 render() {
 
@@ -158,7 +172,7 @@ render() {
   //var userObject = {};
   var index;
 
-  // var 
+  // var
   // if (this.state > 0) {
   //   return (
   //     <div>
@@ -248,11 +262,16 @@ render() {
 
         {
           this.state.resultyt.map((link, i) => {
+            var imgLink = link.split("embed/");
+            console.log(imgLink[1]);
+            var image = "https://img.youtube.com/vi/" + imgLink[1] + "/sddefault.jpg";
             var frame =
             <div key={i} className="exploreSmallYoutubeArea col-md-2">
-              <iframe className="exploreSmallYoutube row" id= {"exploreSmallYoutube " + i} src={link} frameBorder="0" onMouseOver={this.displayShare} onMouseLeave={this.hideShare} allowFullScreen >
-              </iframe>
-              <input className="row exploreSmallYoutubeButton" type="button" id="shareSingleVideo" index={i} value="Share on U-flow" data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}></input>
+              <div id={"iframeImg" + i}>
+                <img id= {"exploreSmallYoutube " + i} onClick={() => this.replaceThumbnail(link, i)} src={image} width="270px" height="155px" frameBorder="0">
+                </img>
+              </div>
+              <input className="exploreSmallYoutubeButton" type="button" id="shareSingleVideo" index={i} value="Share on U-flow" data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}></input>
             </div>
             return frame;
           })
