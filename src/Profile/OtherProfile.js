@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import NavBar from "../Navbar/Navbar";
 import { modelInstance } from '../data/model';
 import firebase from 'firebase';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class OtherProfile extends Component {
 
@@ -39,7 +41,10 @@ class OtherProfile extends Component {
       var flow_videos = [];
       firebase.database().ref('/shares/' + userId + '/videos').once('value', snapshot => {
         //console.log(snapshot.val())
-        if (snapshot.val() !== null) {
+        if (snapshot.val() === null) {
+          this.emptySharesList();
+        }
+        else {
           var key = Object.keys(snapshot.val());
           if (key !== undefined) {
             key.map((key) =>
@@ -97,6 +102,43 @@ class OtherProfile extends Component {
     }
   }
 
+  startFollow(userid, followid) {
+    if (userid === followid) {
+      confirmAlert({
+        customUI: ({ onClose }) => {
+          return (
+            <div className='custom-ui'>
+              <p>Sorry, you can not follow yourself.</p>
+              <button onClick={onClose}>Ok</button>
+            </div>
+            )
+          }
+        })
+    }
+    else {
+      modelInstance.follow(userid, followid);
+    }
+
+  }
+
+  stopFollow(userid, followid) {
+    if (userid === followid) {
+      confirmAlert({
+        customUI: ({ onClose }) => {
+          return (
+            <div className='custom-ui'>
+              <p>Sorry, you can not stop following yourself.</p>
+              <button onClick={onClose}>Ok</button>
+            </div>
+            )
+          }
+        })
+    }
+    else {
+      modelInstance.stopFollow(userid, followid);
+    }
+  }
+
   modalVideo(event) {
     var position = document.getElementById("shareVideoArea");
     if(position.firstChild){
@@ -115,6 +157,19 @@ class OtherProfile extends Component {
     //video.className = "col-md-7";
     video.id = "modalVideo";
     position.appendChild(video);
+  }
+
+  emptySharesList() {
+    var position = document.getElementById("profileFlow");
+    var col = document.createElement("div");
+    col.className = "col-md-1";
+    position.appendChild(col);
+
+    var text = document.createElement("p");
+    text.className = "emptyResText";
+    var textNode = document.createTextNode("No shares yet.");
+    text.appendChild(textNode);
+    position.appendChild(text);
   }
 
   render() {
@@ -144,8 +199,8 @@ class OtherProfile extends Component {
             <div className="col-md-6">
               <h3 id="profileName"> {username}</h3>
               <div id="followButtons">
-                  <button className="followButton exploreSmallYoutubeButton" id="follow" onClick={ () => modelInstance.follow(this.state.currentUser.id, this.state.profileUser.id)}>Follow</button>
-                  <button className="exploreSmallYoutubeButton" id="follow" onClick={() => modelInstance.stopFollow(this.state.currentUser.id, this.state.profileUser.id)}>Stop Following</button>
+                  <button className="followButton exploreSmallYoutubeButton" id="follow" onClick={ () => this.startFollow(this.state.currentUser.id, this.state.profileUser.id)}>Follow</button>
+                  <button className="exploreSmallYoutubeButton" id="follow" onClick={() => this.stopFollow(this.state.currentUser.id, this.state.profileUser.id)}>Stop Following</button>
                 </div>
             </div>
 
