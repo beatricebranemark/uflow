@@ -202,7 +202,13 @@ this.setAllUsers = function(users) {
 }
 
 this.checkUser = function(filter) {
-  return allUsers.includes(filter);
+  allUsers.map((user, i) => {
+    var undef = user.indexOf(filter);
+    console.log(undef);
+    if (undef === -1) {
+      return true;
+    }
+  })
 }
 
 this.getVideos = function (filter) {
