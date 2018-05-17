@@ -65,7 +65,10 @@ handleChangeDescription(event) {
       var following = [];
       firebase.database().ref('/follow/' + user.uid + '/following').once('value', people => {
         console.log(people.val())
-        if (people.val() !== null) {
+        if (people.val() === null) {
+          this.emptyFollowList();
+        }
+        else {
           var key = Object.keys(people.val());
           if (key !== undefined) {
             key.map((key) =>
@@ -160,6 +163,19 @@ handleChangeDescription(event) {
 
   navigateToUser(event) {
     this.props.model.setProfileUser(event.target.id);
+  }
+
+  emptyFollowList() {
+    var position = document.getElementById("FlowVerticalFlow");
+    var col = document.createElement("div");
+    col.className = "col-md-1";
+    position.appendChild(col);
+
+    var text = document.createElement("p");
+    text.className = "emptyResText";
+    var textNode = document.createTextNode("You are not following any U-flow users yet. Find users by searching for them in Explore!");
+    text.appendChild(textNode);
+    position.appendChild(text);
   }
 
   render() {

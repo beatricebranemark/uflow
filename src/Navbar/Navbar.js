@@ -48,6 +48,8 @@ class Navbar extends Component {
     event.preventDefault();
     this.props.model.setFilter(this.state.filter);
     //alert("Vi har nu sparat: " + this.props.model.getFilter() + " i modellen");
+    var position = document.getElementById("exploreHeadline");
+    position.innerHTML = "Results found for <b>videos</b>";
   }
 
   handleFilter = (event) => {

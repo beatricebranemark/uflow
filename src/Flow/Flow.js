@@ -3,6 +3,8 @@ import { Slide } from 'react-slideshow-image';
 import { modelInstance } from '../data/model';
 import firebase from 'firebase';
 import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class Flow extends Component {
 
@@ -15,7 +17,8 @@ class Flow extends Component {
       allObjects: [],
       allUsers: [],
       allUsersId: [],
-      allPictures: []
+      allPictures: [],
+      status: 'INITIAL'
     };
 
     this.modalVideo = this.modalVideo.bind(this);
@@ -30,7 +33,6 @@ class Flow extends Component {
   }
 
   componentDidMount() {
-
     this.props.model.addObserver(this);
     this.paintVideos();
     modelInstance.createApp();
@@ -53,19 +55,24 @@ class Flow extends Component {
     this.setState({
       filter : this.props.model.getFilter()
     })
-
     this.paintVideos();
     this.paintUsers();
 
   }
 
   paintVideos() {
-
+    this.setState({status: 'INITIAL'})
     this.props.model.getVideos(this.props.model.getFilter()).then(video => {
+      var videoList = [];
+      video.map((link, i) => {
+        var undef = link.indexOf("undefined");
+        if (undef === -1) {
+          videoList.push(link);
+        }
+      })
       this.setState({
         status: 'LOADED',
-        resultyt: video,
-
+        resultyt: videoList,
       })
     }).catch(() => {
       this.setState({
@@ -75,7 +82,6 @@ class Flow extends Component {
   }
 
   paintUsers() {
-
     var allUsernames= [];
     var allUsersId = [];
     var allPictures = [];
@@ -116,34 +122,6 @@ class Flow extends Component {
 
 
 
-}
-
-
-displayShare(event) {
-
-  //var button = document.createElement("input");
-  //button.type = "button";
-  //button.id = "shareButton";
-  //button.value="Share on Uflow";
-
-  //var here = document.getElementById(event.target.id);
-  //var parentDiv = document.getElementsByClassName("youtube col-md-8");
-  //document.body.appendChild(button);
-  //console.log(here);
-
-  //document.body.insertBefore(here, div);
-
-
-}
-
-
-hideShare() {
-
-  //var oldChild = node.removeChild(child);
-  //var button = document.getElementById("shareButton");
-  //console.log(document.getElementById("shareButton"));
-  //document.body.removeChild(button);
-  //console.log("hej");
 }
 
 modalVideo(event) {
@@ -199,13 +177,13 @@ render() {
 
   var resUsers = [];
 
-  if(username.length > 0){
+  if (username.length > 0){
     resUsers =
     <div className="resUsers">
       <h3 className="resUsersText">Results found for <b>users</b></h3>
       <div id={userId} className="row youtubePostHead" onClick={this.navigateToUser}>
         <Link to="/otherProfile">
-          <div className="col-md-1"></div>
+          <div className="col-md-3"></div>
           <img id={userId} className="col-md-6 profilePictureSmall pushRight" src={profilePicture} alt="profilePicture"></img>
           <h3 id={userId} className="resUsername">{username}</h3>
         </Link>
@@ -213,15 +191,41 @@ render() {
     </div>
   }
 
+  var topVideo = [];
+  if (this.state.resultyt.length > 0) {
+    topVideo =
+    <div>
+    <iframe className="exploreChosenYoutube" id="promotedVideo" src={this.state.resultyt[0]} frameBorder="0" allowFullScreen></iframe>
+    <input className="row exploreSmallYoutubeButton" type="button" id="sharePromotedVideo" index={0} value="Share on Uflow" data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}></input>
+    </div>
+  } else {
+    topVideo =
+    <div>
+      <h4 className="resUsersText">No results found.</h4>
+    </div>
+  }
 
-  return(
-    <div className="Explore">
+  let loadingIndicator = null;
+  switch (this.state.status) {
+    case 'INITIAL':
+        loadingIndicator = <div className="loaderIcon text-center"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="Loader icon" /></div>
+        break;
+    case 'LOADED':
+        loadingIndicator = ""
+        break;
+    default:
+        loadingIndicator = <b>Failed to load data, please try again</b>
+        break;
+      }
+
+    return (
+      <div className="Explore">
+      {loadingIndicator}
       {resUsers}
-      <h3 className="resUsersText">Results found for <b>videos</b></h3>
+      <h3 id="exploreHeadline">Start Exploring by searching for a video or a user in the search box above!</h3>
       <div className="col-md-1"></div>
       <div className="promotedArea col-md-10">
-        <iframe className="exploreChosenYoutube" id="promotedVideo" src={this.state.resultyt[0]} frameBorder="0" allowFullScreen></iframe>
-        <input className="row exploreSmallYoutubeButton" type="button" id="sharePromotedVideo" index={0} value="Share on Uflow" data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}></input>
+        {topVideo}
       </div>
 
       {
@@ -271,8 +275,8 @@ render() {
         </div>
       </div>
 
-    </div>
-  );
+    </div>)
+
 }
 }
 

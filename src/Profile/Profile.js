@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import NavBar from "../Navbar/Navbar";
 import { modelInstance } from '../data/model';
 import firebase from 'firebase';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class Profile extends Component {
 
@@ -34,7 +36,10 @@ class Profile extends Component {
       var flow_videos = [];
       firebase.database().ref('/shares/' + user.uid + '/videos').once('value', snapshot => {
         console.log(snapshot.val())
-        if (snapshot.val() !== null) {
+        if (snapshot.val() === null) {
+          this.emptySharesList();
+        }
+        else {
           var key = Object.keys(snapshot.val());
           if (key !== undefined) {
             key.map((key) =>
@@ -108,110 +113,138 @@ modalVideo(event) {
     position.appendChild(video);
   }
 
-  render() {
+  emptySharesList() {
+    var position = document.getElementById("profileFlow");
+    var col = document.createElement("div");
+    col.className = "col-md-1";
+    position.appendChild(col);
 
-    if(this.props.model.getProfileUser() !== null){
-      console.log("hej");
-    }
-    var currentUser = this.state.currentUser;
-    //var currentUser = this.props.model.getProfileUser;
+    var text = document.createElement("p");
+    text.className = "emptyResText";
+    var textNode = document.createTextNode("You have not shared any videos yet. Go to Explore and search for a video you want to share!");
+    text.appendChild(textNode);
+    position.appendChild(text);
+  }
 
-    if (currentUser !== undefined) {
-      //console.log(currentUser)
-      var profile_pic = currentUser.profile_pic;
-      var username = currentUser.email;
-      username = username.substring(0,username.indexOf("@"));
-      username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
-      var ID = currentUser.id;
-    }
-
-    return (
-      <div className="Profile">
-        <NavBar />
-
-        <div className="col-md-2">
-        </div>
-
-        <div className="col-md-10">
-          <div className="row" id="profileNamePictureArea">
-            <div className="col-md-6">
-              <h3 id="profileName"> {username}
-                {/*<Link to="/edit"><span className="glyphicon glyphicon-cog"></span></Link>*/}
-              </h3>
+  removeShare(id, link, text) {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='custom-ui'>
+            <h1>Are you sure?</h1>
+            <p>Do you want to delete this share?</p>
+            <button onClick={onClose}>No</button>
+            <button onClick={() => {
+                modelInstance.removeShare(id, link, text);
+                onClose()
+              }}>Yes</button>
             </div>
+          )
+        }
+      })
+    };
 
-            <div className="ProfilePictureArea col-md-5">
-              <img id="profilePicture" src={profile_pic} alt="profilePicture" />
-              <br></br>
-            </div>
+    render() {
+      var currentUser = this.state.currentUser;
+      //var currentUser = this.props.model.getProfileUser;
 
-            {/*<div id="users">
-              {this.state.users.map((user, i) => {
-              var userDiv =
-              <div>
-              <p id={i}>{user}</p>
-              <button className="followButton" onClick={ () => modelInstance.follow(this.state.currentUser.id, this.state.keys[i])}>Follow</button>
-              <button onClick={() => modelInstance.stopFollow(this.state.currentUser.id, this.state.keys[i])}>Stop Following</button>
-              </div>
-              return userDiv;
-              })
-              }
-              </div>*/}
+      if (currentUser !== undefined) {
+        //console.log(currentUser)
+        var profile_pic = currentUser.profile_pic;
+        var username = currentUser.email;
+        username = username.substring(0,username.indexOf("@"));
+        username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
+        var ID = currentUser.id;
+      }
 
-            </div>
+      return (
+        <div className="Profile">
+          <NavBar />
+
+          <div className="col-md-2">
           </div>
-          <div className="col-md-1"></div>
-          <div  className="col-md-10">
 
-            <div id="profileFlow">
-              {
-                this.state.profile_videos.map((link, i) => {
+          <div className="col-md-10">
+            <div className="row" id="profileNamePictureArea">
+              <div className="col-md-6">
+                <h3 id="profileName"> {username}
+                  {/*<Link to="/edit"><span className="glyphicon glyphicon-cog"></span></Link>*/}
+                </h3>
+              </div>
 
-                  var frame =
-                  <div>
-                    <div className="youtubePost">
-                      <div className="youtubePostHead row">
-                        <img className="col-md-6 profilePictureSmall" src={profile_pic} alt="profilePictureSmall" />
-                        <h2 className="col-md-6">{username}<p></p><p className="postText">{this.state.texts[i]}</p></h2>
-                      </div>
-                      <button className="removeShareButton" onClick={() => modelInstance.removeShare(this.state.currentUser.id, link, this.state.texts[i])}>X</button>
-                      <div className="col-md-1"></div>
-                      <div className="col-md-10">
-                        <iframe className='profileVideo col-md-12' width= "840" height="472.5" key={'video' + i} src={link} frameBorder="0" allowFullScreen >
-                        </iframe>
-                        <div className="col-md-12" id="youtubePostButton">
-                          <button className="shareButtonProfile" index={i} data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}>Share on uflow</button>
-                        </div>
-                      </div>
-                    </div>
-                    <br></br>
-                  </div>
-                  return frame;
+              <div className="ProfilePictureArea col-md-5">
+                <img id="profilePicture" src={profile_pic} alt="profilePicture" />
+                <br></br>
+              </div>
+
+              {/*<div id="users">
+                {this.state.users.map((user, i) => {
+                var userDiv =
+                <div>
+                <p id={i}>{user}</p>
+                <button className="followButton" onClick={ () => modelInstance.follow(this.state.currentUser.id, this.state.keys[i])}>Follow</button>
+                <button onClick={() => modelInstance.stopFollow(this.state.currentUser.id, this.state.keys[i])}>Stop Following</button>
+                </div>
+                return userDiv;
                 })
-              }
-              <div>
-                <div id="shareModal" className="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div className="modal-dialog">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
-                        <h4 className="modal-title" id="myModalLabel">Share video</h4>
+                }
+                </div>*/}
+
+              </div>
+            </div>
+            <div className="col-md-1"></div>
+            <div  className="col-md-10">
+
+              <div id="profileFlow">
+                {
+                  this.state.profile_videos.map((link, i) => {
+
+                    var frame =
+                    <div>
+                      <div className="youtubePost">
+                        <div className="youtubePostHead row">
+                          <img className="col-md-6 profilePictureSmall" src={profile_pic} alt="profilePictureSmall" />
+                          <h2 className="col-md-6">{username}<p></p><p className="postText">{this.state.texts[i]}</p></h2>
+                        </div>
+                        <button className="removeShareButton" onClick={() => this.removeShare(this.state.currentUser.id, link, this.state.texts[i])}>X</button>
+                        <div className="col-md-1"></div>
+                        <div className="col-md-10">
+                          <iframe className='profileVideo col-md-12' width= "840" height="472.5" key={'video' + i} src={link} frameBorder="0" allowFullScreen >
+                          </iframe>
+                          <div className="col-md-12" id="youtubePostButton">
+                            <button className="shareButtonProfile" index={i} data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}>Share on uflow</button>
+                          </div>
+                        </div>
                       </div>
-                      <div className="modal-body">
-                        <div className="col-md-1">
+                      <br></br>
+                    </div>
+                    return frame;
+                  })
+                }
+                <div>
+                  <div id="shareModal" className="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                          <h4 className="modal-title" id="myModalLabel">Share video</h4>
                         </div>
-                        <div id="shareVideoArea">
+                        <div className="modal-body">
+                          <div className="col-md-1">
+                          </div>
+                          <div id="shareVideoArea">
+                          </div>
+                          <div className="col-md-1">
+                          </div>
+                          <h5 id="modalDescription">Description</h5>
+                          <div className="col-md-1">
+                          </div>
+                          <textarea className="modalDescriptionBox" id="modalDescriptionBoxShare" placeholder="Write a description for this video" onChange={this.handleChangeDescription}></textarea>
                         </div>
-                        <div className="col-md-1">
+                        <div className="modal-footer">
+                          <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={() => modelInstance.shareVideo(this.state.currentVideo, this.state.currentUser.id, this.state.currentText)}>Share this on Uflow</button>
                         </div>
-                        <h5 id="modalDescription">Description</h5>
-                        <div className="col-md-1">
-                        </div>
-                        <textarea className="modalDescriptionBox" id="modalDescriptionBoxShare" placeholder="Write a description for this video" onChange={this.handleChangeDescription}></textarea>
-                      </div>
-                      <div className="modal-footer">
-                        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={() => modelInstance.shareVideo(this.state.currentVideo, this.state.currentUser.id, this.state.currentText)}>Share this on Uflow</button>
                       </div>
                     </div>
                   </div>
@@ -219,9 +252,8 @@ modalVideo(event) {
               </div>
             </div>
           </div>
-        </div>
-      );
+        );
+      }
     }
-  }
 
-  export default Profile;
+    export default Profile;

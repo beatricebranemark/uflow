@@ -161,6 +161,7 @@ this.removeShare = function(user_id, video, text) {
 })
 }
 
+
 this.googleLogin = function() {
   const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -207,18 +208,17 @@ this.checkUser = function(filter) {
 this.getVideos = function (filter) {
 
   const result = 30;
-  if(filter){
+  if (filter) {
     //videos
     var youtubeURL = `https://www.googleapis.com/youtube/v3/search?key=${key}&part=snippet,id&q=${filter}&order=relevance&maxResults=${result}`;
     return this.map(youtubeURL);
   }
+  else {
+    const channelID = 'UCEQi1ZNJiw3YMRwni0OLsTQ'
+    var finalURL = `https://www.googleapis.com/youtube/v3/search?key=${key}&part=snippet,id&order=date&maxResults=${result}`
 
-  //console.log(temp);
-  const channelID = 'UCEQi1ZNJiw3YMRwni0OLsTQ'
-  var finalURL = `https://www.googleapis.com/youtube/v3/search?key=${key}&channelId=${channelID}&part=snippet,id&order=date&maxResults=${result}`
-
-  return this.map(finalURL);
-
+    return this.map(finalURL);
+  }
 }
 
 
