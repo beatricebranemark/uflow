@@ -3,27 +3,42 @@ import { Link } from 'react-router-dom';
 import logo from '../images/logo.jpg';
 import { modelInstance } from '../data/model';
 import NavBar from "../Navbar/Navbar";
+import firebase from 'firebase';
 
 
 class Signup extends Component {
 
   constructor(props) {
     super(props);
+    this.state = ({
+      currentUser: null
+    })
+  }
+
+  componentDidMount() {
+    modelInstance.createApp()
+    firebase.auth().onAuthStateChanged(user => {
+      firebase.database().ref('/users/' + user.uid).once('value', snapshot => {
+        this.setState({currentUser: snapshot.val()})
+      })
+    })
+  }
+
+  setCurrentUserInModel() {
+    modelInstance.currentUser = this.state.currentUser.id;
   }
 
     render() {
       //console.log(this.state.currentUser);
-      var currentUser = this.props.currentUser;
+      var currentUser = this.state.currentUser;
 
       if (currentUser !== null) {
 
-        var profile_pic = currentUser.photoURL;
-        var fullName = currentUser.displayName;
-        var email = currentUser.email;
+        var profile_pic = currentUser.profile_pic;
         var username = currentUser.email;
         username = username.substring(0,username.indexOf("@"));
         username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
-        var ID = currentUser.uid;
+        var ID = currentUser.id;
       }
 
 
@@ -39,6 +54,9 @@ class Signup extends Component {
                 <img id="profilePicture" src={profile_pic} alt="profilePicture" />
               </div>
               <br></br>
+                <div id="uploadImage">
+                 <input type="file" id="file" name="file" onChange={this.setCurrentUserInModel(); modelInstance.handleFileSelect}></input>
+               </div>
 
               <Link to="/explore">
                 <button className="actionButton" type="submit" value="Continue">Continue</button>

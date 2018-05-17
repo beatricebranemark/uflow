@@ -1,8 +1,10 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
+import firebase from 'firebase';
+import { modelInstance } from '../data/model';
 
 const FileUpload = ({children}) => (
-  <Dropzone className= "ignore" onDrop = {(files) => console.log(files)}>
+  <Dropzone className= "ignore" onDrop = {(files) => modelInstance.handleFileSelect(files)}>
   {children}
   </Dropzone>
 );
