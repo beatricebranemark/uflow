@@ -55,7 +55,7 @@ class Signup extends Component {
               </div>
               <br></br>
                 <div id="uploadImage">
-                 <input type="file" id="file" name="file" onChange={this.setCurrentUserInModel(); modelInstance.handleFileSelect}></input>
+                 <input type="file" id="file" name="file" onChange={modelInstance.handleFileSelect}></input>
                </div>
 
               <Link to="/explore">
