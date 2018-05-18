@@ -43,7 +43,6 @@ class Profile extends Component {
       })
       var flow_videos = [];
       firebase.database().ref('/shares/' + user.uid + '/videos').once('value', snapshot => {
-        console.log(snapshot.val())
         if (snapshot.val() === null) {
           this.emptySharesList();
         }
@@ -61,14 +60,12 @@ class Profile extends Component {
     })
     var videoTexts = [];
     firebase.database().ref('/shares/' + user.uid + '/texts').once('value', snapshot => {
-      console.log(snapshot.val())
       if (snapshot.val() !== null) {
         var key = Object.keys(snapshot.val());
         if (key !== undefined) {
           key.map((key) =>
           firebase.database().ref('/shares/' + user.uid + '/texts/' + key).once('value', snapshot => {
             videoTexts.unshift(snapshot.val());
-            console.log(snapshot.val())
             this.setState({texts: videoTexts});
           })
         );
@@ -168,7 +165,6 @@ modalVideo(event) {
         break;
       }
 
-      console.log(this.state.profile_pic);
       var currentUser = this.state.currentUser;
       //var currentUser = this.props.model.getProfileUser;
 
@@ -223,7 +219,7 @@ modalVideo(event) {
                   this.state.profile_videos.map((link, i) => {
 
                     var frame =
-                    <div>
+                    <div key={i}>
                       <div className="youtubePost">
                         <div className="youtubePostHead row">
                           <img className="col-md-6 profilePictureSmall" src={this.state.profile_pic} alt="profilePictureSmall" />
@@ -245,11 +241,11 @@ modalVideo(event) {
                   })
                 }
                 <div>
-                  <div id="shareModal" className="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div id="shareModal" className="modal fade" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                       <div className="modal-content">
                         <div className="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                          <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
                           <h4 className="modal-title" id="myModalLabel">Share video</h4>
                         </div>
                         <div className="modal-body">

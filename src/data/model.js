@@ -184,11 +184,11 @@ this.handleFileSelect = function(files) {
     console.log('Uploaded', snapshot.totalBytes, 'bytes.');
     console.log('File metadata:', snapshot.metadata);
     storageRef.child('images/' + userId + '/' + file.name).getDownloadURL().then(function(url) {
-    // `url` is the download URL for the uploaded image
-    firebase.database().ref('/images/' + userId).set({
-      image: url
-    });
-    window.location = "profile";
+      // `url` is the download URL for the uploaded image
+      firebase.database().ref('/images/' + userId).set({
+        image: url
+      });
+      window.location = "profile";
     }).catch(function(error) {
       console.log(error)
     });
@@ -202,11 +202,11 @@ this.handleFileSelect = function(files) {
 this.addToDatabase = function(file, userId) {
   var storageRef = firebase.storage().ref();
   storageRef.child('images/' + userId + '/' + file.name).getDownloadURL().then(function(url) {
-  // `url` is the download URL for the uploaded image
-  console.log(url);
-}).catch(function(error) {
-  console.log(error)
-});
+    // `url` is the download URL for the uploaded image
+    console.log(url);
+  }).catch(function(error) {
+    console.log(error)
+  });
   // [END oncomplete]
 }
 
@@ -235,47 +235,6 @@ this.getVideos = function (filter) {
   }
 }
 
-
-this.getUsers = function(filter){
-
-  //Get all users
-
-  var allUsernames= [];
-  var allIds = [];
-  var allPictures = [];
-  var allObjects = [];
-
-  //Store objects, usernames and id:s
-  firebase.database().ref('/users/').once('value', snapshot => {
-    var key = Object.keys(snapshot.val());
-    allObjects.push(snapshot.val());
-    key.map((key) =>
-    firebase.database().ref('/users/' + key + '/username').once('value', user => {
-      allIds.push(key);
-      allUsernames.push(user.val());
-    })
-  )
-})
-//Store profile pictures
-firebase.database().ref('/users/').once('value', snapshot => {
-  var key = Object.keys(snapshot.val());
-  key.map((key) =>
-  firebase.database().ref('/users/' + key + '/profile_pic').once('value', pic => {
-    allPictures.push(pic.val());
-  })
-)
-})
-
-var resUsers = [];
-resUsers.push(allUsernames);
-resUsers.push(allIds);
-resUsers.push(allPictures);
-
-return allUsernames;
-//}
-
-}
-
 this.getProfileUser = function () {
   return profileUser;
 }
@@ -293,6 +252,7 @@ this.setFilter = function (newFilter) {
   filter = newFilter;
   notifyObservers();
 }
+
 this.addObserver = function (observer) {
   observers.push(observer);
 };

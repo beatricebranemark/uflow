@@ -174,13 +174,13 @@ render() {
 
   if (username.length > 0) {
     resUsers.push(
-      <div className="resUsers">
+      <div className="resUsers" key="resUsers">
         <h3 className="resUsersText">Results found for <b>users</b></h3>
       </div>
       );
       username.map((name, i) => {
         resUsers.push(
-          <div id={userId[i]} className="row youtubePostHead" onClick={this.navigateToUser}>
+          <div id={userId[i]} key={i} className="row youtubePostHead" onClick={this.navigateToUser}>
             <Link to="/otherProfile">
               <div className="col-md-3"></div>
               <img id={userId[i]} className="col-md-6 profilePictureSmall pushRight" src={profilePicture[i]} alt="profilePicture"></img>
