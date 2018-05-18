@@ -14,27 +14,27 @@ margin-top: 30px;
 }
 
 .profilePictureSmall {
-	width: 160px;
-	height: 130px;
-	border-radius: 50%;
-	object-fit: cover;
+    width: 160px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 #profileName{
-	margin-top: 200px;
-	font-size: 45px;
+    margin-top: 200px;
+    font-size: 45px;
 }
 
 #profileNamePictureArea {
-	text-align: center;
-	display: block;
-	margin: 0px;
-	color: #d6d6d6;
+    text-align: center;
+    display: block;
+    margin: 0px;
+    color: #d6d6d6;
 
 }
 
 .pushRight {
-	margin-left: 80px;
+    margin-left: 80px;
 }
 
 .profileThumbnail{
@@ -85,8 +85,8 @@ transform: translate(-50%, -50%);
 }
 
 .video_area{
-	position: relative;
-	text-align: center;
+    position: relative;
+    text-align: center;
 
 }
 /*h4{
@@ -97,261 +97,261 @@ transform: translate(-50%, -50%);
 }*/
 
 .editProfileButtonArea{
-	margin-top: 30px;
+    margin-top: 30px;
 }
 
 #logo{
-	margin-top: -25px;
-	padding: 0px;
-	width: 130px;
-	height: 65px;
+    margin-top: -25px;
+    padding: 0px;
+    width: 130px;
+    height: 65px;
 }
 
 .navbar{
-	background-color: white;
-	height: 70px;
-	border-width: 2px;
-	color: #d1d1d1;
-	border-color: #d1d1d1;
-	border-bottom: 0px;
-	border-color: transparent;
+    background-color: white;
+    height: 70px;
+    border-width: 2px;
+    color: #d1d1d1;
+    border-color: #d1d1d1;
+    border-bottom: 0px;
+    border-color: transparent;
 }
 
 .input-group{
-	margin-left: 300px;
-	margin-top: 8px;
-	width: 300px;
+    margin-left: 300px;
+    margin-top: 8px;
+    width: 300px;
 }
 
 .material-icons{
-	margin-top: 15px;
-	margin-right: 40px;
-	font-size: 30px;
-	color: #d6d6d6;
+    margin-top: 15px;
+    margin-right: 40px;
+    font-size: 30px;
+    color: #d6d6d6;
 
 }
 
 .material-icons:hover{
-	color: #8e8e8e;
+    color: #8e8e8e;
 }
 
 .clickableUsername:hover {
-	color: white;
+    color: white;
 }
 
 .clickableUsername {
-	color: white;
+    color: white;
 }
 
 .material-icons:active{
-	color: #8e8e8e;
+    color: #8e8e8e;
 }
 
 .input-group-btn{
-	float: center;
+    float: center;
 }
 
 
 .exploreYoutubeArea{
-	margin-top: 20px;
-	margin-right: 25px;
-	margin-left: 100px;
-	/*display: flex;*/
-	/*box-sizing: border-box;*/
+    margin-top: 20px;
+    margin-right: 25px;
+    margin-left: 100px;
+    /*display: flex;*/
+    /*box-sizing: border-box;*/
 
 }
 
 .welcomeLogo {
-	padding: 50px;
+    padding: 50px;
 }
 
 .jumbotron {
-	background-color: white;
-	height: 1000px;
+    background-color: white;
+    height: 1000px;
 }
 
 .emptyResText {
-	margin-top: 100px;
-	color: white;
-	font-size: 30px;
-	text-align: center;
+    margin-top: 100px;
+    color: white;
+    font-size: 30px;
+    text-align: center;
 }
 
 #logInButton {
-	height: 20%;
-	width: 40%;
-	background-color: #c8d9ec;
-	border-radius: 5px;
-	padding: 10px;
-	color: black;
-	font-size: 25px;
-	font-weight: bold;
-	margin-top: 100px;
+    height: 20%;
+    width: 40%;
+    background-color: #c8d9ec;
+    border-radius: 5px;
+    padding: 10px;
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 100px;
 }
 
 .Welcome {
-	height: 100%;
+    height: 100%;
 }
 
 #welcome {
-	text-align: center;
+    text-align: center;
 }
 
 #signup {
-	text-align: center;
+    text-align: center;
 }
 
 .actionButton {
-	background-color: #c8d9ec;
-	border-radius: 5px;
-	padding: 10px;
-	color: black;
+    background-color: #c8d9ec;
+    border-radius: 5px;
+    padding: 10px;
+    color: black;
 }
 
 #or {
-	margin: 40px;
+    margin: 40px;
 }
 
 .EditProfile {
-	margin-top: 70px;
+    margin-top: 70px;
 }
 
 .SelectProfile {
-	margin-top: 50px;
+    margin-top: 50px;
 }
 
 .Profile {
-		margin-top: 50px;
+        margin-top: 50px;
 }
 
 /* Flow.js */
 
 .exploreSmallYoutube{
-	width: 270px;
-	height: 150px;
+    width: 270px;
+    height: 150px;
 }
 
 /*.exploreSmallYoutube{
-	width:280px;
-	height: 157.5px;
-	margin-top: 3%;
-	margin-bottom: 3%;
-	-webkit-transition-property: height, width;
-	-webkit-transition-duration: 0.5s;
-	-moz-transition-property: height, width;
-	-moz-transition-duration: 0.5s;
-	transition-property: height, width;
-	transition-duration: 0.5s;
+    width:280px;
+    height: 157.5px;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    -webkit-transition-property: height, width;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-property: height, width;
+    -moz-transition-duration: 0.5s;
+    transition-property: height, width;
+    transition-duration: 0.5s;
 }*/
 
 /*.exploreSmallYoutube:hover {
-	width: 336px;
-	height: 189px;
-	-webkit-transition-property: height, width;
-	-webkit-transition-duration: 0.5s;
-	-moz-transition-property: height, width;
-	-moz-transition-duration: 0.5s;
-	transition-property: height, width;
-	transition-duration: 0.5s;
+    width: 336px;
+    height: 189px;
+    -webkit-transition-property: height, width;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-property: height, width;
+    -moz-transition-duration: 0.5s;
+    transition-property: height, width;
+    transition-duration: 0.5s;
 
 }
 
 
 .exploreSmallYoutube:hover ~ .exploreSmallYoutube{
-	-webkit-transition-property: height, width;
-	-webkit-transition-duration: 0.5s;
-	-moz-transition-property: height, width;
-	-moz-transition-duration: 0.5s;
-	transition-property: height, width;
-	transition-duration: 0.5s;
-	transform: translate(3em,0);
-	-webkit-transform: translate(3em,0);
-	-moz-transform: translate(3em,0);
-	-o-transform: translate(3em,0);
-	-ms-transform: translate(3em,0);
+    -webkit-transition-property: height, width;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-property: height, width;
+    -moz-transition-duration: 0.5s;
+    transition-property: height, width;
+    transition-duration: 0.5s;
+    transform: translate(3em,0);
+    -webkit-transform: translate(3em,0);
+    -moz-transform: translate(3em,0);
+    -o-transform: translate(3em,0);
+    -ms-transform: translate(3em,0);
 }
 
 div ~ .exploreSmallYoutube + .exploreSmallYoutube:hover {
-	-webkit-transition-property: height, width;
-	-webkit-transition-duration: 0.5s;
-	-moz-transition-property: height, width;
-	-moz-transition-duration: 0.5s;
-	transition-property: height, width;
-	transition-duration: 0.5s;
-	transform: translate(3em,0);
-	-webkit-transform: translate(3em,0);
-	-moz-transform: translate(3em,0);
-	-o-transform: translate(3em,0);
-	-ms-transform: translate(3em,0);
+    -webkit-transition-property: height, width;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-property: height, width;
+    -moz-transition-duration: 0.5s;
+    transition-property: height, width;
+    transition-duration: 0.5s;
+    transform: translate(3em,0);
+    -webkit-transform: translate(3em,0);
+    -moz-transform: translate(3em,0);
+    -o-transform: translate(3em,0);
+    -ms-transform: translate(3em,0);
 }
 
 
 
 .exploreSmallYoutube:onMouseLeave {
-	width: 280px;
-	height: 157.5px;
-	-webkit-transition-property: height, width;
-	-webkit-transition-duration: 0.5s;
-	-moz-transition-property: height, width;
-	-moz-transition-duration: 0.5s;
-	transition-property: height, width;
-	transition-duration: 0.5s;
+    width: 280px;
+    height: 157.5px;
+    -webkit-transition-property: height, width;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-property: height, width;
+    -moz-transition-duration: 0.5s;
+    transition-property: height, width;
+    transition-duration: 0.5s;
 }
 
 
 .exploreSmallYoutube:onMouseLeave ~ .exploreSmallYoutube{
-	width: 280px;
-	height: 157.5px;
-	-webkit-transition-property: height, width;
-	-webkit-transition-duration: 0.5s;
-	-moz-transition-property: height, width;
-	-moz-transition-duration: 0.5s;
-	transition-property: height, width;
-	transition-duration: 0.5s;
+    width: 280px;
+    height: 157.5px;
+    -webkit-transition-property: height, width;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-property: height, width;
+    -moz-transition-duration: 0.5s;
+    transition-property: height, width;
+    transition-duration: 0.5s;
 }*/
 
 #file {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 25%;
-	}
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    }
 
 .exploreSmallYoutubeArea{
-	margin-right: 55px;
-	margin-left: 40px;
+    margin-right: 55px;
+    margin-left: 40px;
 }
 
 .exploreSmallYoutubeButton{
-	width: 270px;
-	height: 45px;
-	margin-top: -5px;
-	opacity: 100%;
-	background-color: #3a3a3a;
-	color: #d6d6d6;
-	border: 0.5px solid #262626;
-	margin-bottom: 30px;
+    width: 270px;
+    height: 45px;
+    margin-top: -5px;
+    opacity: 100%;
+    background-color: #3a3a3a;
+    color: #d6d6d6;
+    border: 0.5px solid #262626;
+    margin-bottom: 30px;
 }
 
 #myModalLabel{
-	text-align: center;
+    text-align: center;
 }
 
 .modalDescriptionBox{
-	width: 474.32px;
-	height: 100px;
+    width: 474.32px;
+    height: 100px;
 }
 
 .modal-body{
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 #modalDescription{
-	margin-top: 15px;
-	margin-bottom: 15px;
-	/*margin-left: 65px;*/
-	text-align: center;
-	font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    /*margin-left: 65px;*/
+    text-align: center;
+    font-size: 18px;
 }
 
 #message input,
@@ -375,140 +375,140 @@ div ~ .exploreSmallYoutube + .exploreSmallYoutube:hover {
 }
 
 #modalVideo{
-	width: 474.32px;
-	height: 242.55px;
+    width: 474.32px;
+    height: 242.55px;
 }
 
 #modalDescriptionBoxShare{
-	font-size: 16px;
+    font-size: 16px;
 }
 
 .exploreChosenYoutube{
-	border: 0.5px solid #262626;
-	margin-right: 3px;
+    border: 0.5px solid #262626;
+    margin-right: 3px;
 }
 
 #promotedArea{
-	margin-top: 20px;
-	margin-left: 90px;
+    margin-top: 20px;
+    margin-left: 90px;
 }
 
 #promotedVideo{
-	width: 840px;
-	height: 472.5px;
-	margin-left: 100px;
+    width: 840px;
+    height: 472.5px;
+    margin-left: 100px;
 }
 
 #sharePromotedVideo{
-	width: 840px;
-	margin-left: 100px;
+    width: 840px;
+    margin-left: 100px;
 }
 
 
 .profileVideo {
-	text-align: center;
-	margin-bottom: 5px;
+    text-align: center;
+    margin-bottom: 5px;
 }
 
 .youtubePost {
-	color: #ededed;
-	display: block;
-	margin-bottom: 5px;
+    color: #ededed;
+    display: block;
+    margin-bottom: 5px;
 
 }
 
 .youtubePost {
-	margin-left:55px;
+    margin-left:55px;
 }
 
 .postText {
-	font-style: italic;
+    font-style: italic;
 }
 
 .shareButton{
-	/*display: block;
-	background-color: #c8d9ec;
-	border-radius: 5px;
-	padding: 10px;
-	color: black;
-	width: 100%;*/
-	width: 758px;
-	height: 60px;
-	margin-top: -5px;
-	opacity: 100%;
-	background-color: #3a3a3a;
-	color: #d6d6d6;
-	border: 0.5px solid #262626;
+    /*display: block;
+    background-color: #c8d9ec;
+    border-radius: 5px;
+    padding: 10px;
+    color: black;
+    width: 100%;*/
+    width: 758px;
+    height: 60px;
+    margin-top: -5px;
+    opacity: 100%;
+    background-color: #3a3a3a;
+    color: #d6d6d6;
+    border: 0.5px solid #262626;
 }
 
 .shareButtonProfile {
-	width: 100%;
-	height: 60px;
-	margin-top: -5px;
-	opacity: 100%;
-	background-color: #3a3a3a;
-	color: #d6d6d6;
-	border: 0.5px solid #262626;
+    width: 100%;
+    height: 60px;
+    margin-top: -5px;
+    opacity: 100%;
+    background-color: #3a3a3a;
+    color: #d6d6d6;
+    border: 0.5px solid #262626;
 }
 
 .removeShareButton {
-	opacity: 100%;
-	background-color: #3a3a3a;
-	color: #d6d6d6;
-	border: 0.5px solid #262626;
+    opacity: 100%;
+    background-color: #3a3a3a;
+    color: #d6d6d6;
+    border: 0.5px solid #262626;
 }
 
 .friendFlowArea{
-	margin-top: 0px;
+    margin-top: 0px;
 }
 
 .otherProfile {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 
 .youtubePostHead {
-	margin-left: 10px;
-	margin-top: 20px;
-	margin-bottom: 0px;
+    margin-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 0px;
 }
 
 .youtubePostVideo{
-	margin-bottom: 30px;
+    margin-bottom: 30px;
 }
 
 .FlowVertical {
-	margin-top: 70px;
+    margin-top: 70px;
 }
 
 .FlowVerticalVideo {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .followButtons{
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 .ProfilePictureArea{
-	margin-top: 40px;
-	margin-left: -50px;
+    margin-top: 40px;
+    margin-left: -50px;
 }
 
 .glyphicon-cog{
-	margin-left: 30px;
+    margin-left: 30px;
 }
 
 #follow{
-	width: 100px;
-	font-size: 12px;
-	height: 50px;
+    width: 100px;
+    font-size: 12px;
+    height: 50px;
 }
 
 #youtubePostButton {
-	margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 .resUserPicture{
-	width: 180px;
+    width: 180px;
 height: 18 0px;
 border-radius: 50%;
 object-fit: cover;
@@ -516,24 +516,24 @@ margin-top: 20px;
 }
 
 .resUsername{
-	color: #d6d6d6;
+    color: #d6d6d6;
 }
 
 .resUsers{
-	color: #d6d6d6;
+    color: #d6d6d6;
 }
 
 .resUsersText{
-	color: #d6d6d6;
-	margin-top: 50px;
-	text-align: center;
+    color: #d6d6d6;
+    margin-top: 50px;
+    text-align: center;
 }
 
 #exploreHeadline{
-	color: #d6d6d6;
-	text-align: center;
-	color: #d6d6d6;
-	margin-top: 50px;
+    color: #d6d6d6;
+    text-align: center;
+    color: #d6d6d6;
+    margin-top: 25px;
 }
 
 .relativeDiv {
@@ -558,4 +558,15 @@ margin-top: 20px;
 .relativeDiv:hover .img__description {
   visibility: visible;
   opacity: 1;
+}
+
+.loaderIcon {
+	width:100%;
+	height: 35px;
+	font-size: 20px;
+	background-color: #363636;
+	margin-top:20px;
+	text-align: center;
+	color: white;
+	font-style: italic;
 }

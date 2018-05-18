@@ -240,7 +240,7 @@ render() {
 
     switch (this.state.status) {
       case 'INITIAL':
-      loadingIndicator = <div className="loaderIcon text-center"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="Loader icon" /></div>
+      loadingIndicator = <div className="loaderIcon">Data is loading...</div>
       break;
       case 'LOADED':
       loadingIndicator = ""
