@@ -23,17 +23,6 @@ const Model = function () {
     }
   }
 
-  this.createDatabase = function() {
-    // Get a reference to the database service
-    var database = firebase.database();
-  }
-
-  this.createStorage = function() {
-    var storage = firebase.storage();
-    var storageRef = firebase.storage().ref();
-    var imagesRef = storageRef.child('images');
-  }
-
   //This function is called when a user logs in via Google. It adds the user in
   //the database.
   this.writeUserData = function(email, id, profile_pic, username, fullName) {
@@ -55,10 +44,8 @@ const Model = function () {
   this.shareVideo = function(video, id, text) {
 
     this.createApp();
-    var sharesRef = firebase.database().ref('shares/' + id);
 
     var newShareKey = firebase.database().ref().child('videos').push().key;
-    var newShareTextKey = firebase.database().ref().child('texts').push().key;
     // Write the new post's data simultaneously in the posts list and the user's post list.
     var updates = {};
     //updates['/shares/' + newShareKey] = video;
@@ -70,11 +57,7 @@ const Model = function () {
 
   this.follow = function(user_id, follow_id) {
     this.createApp();
-    console.log(follow_id);
-
-    var followRef = firebase.database().ref('follow/' + user_id);
     var newFollowKey = firebase.database().ref().child('following').push().key;
-    var newFollowerKey = firebase.database().ref().child('followers').push().key;
 
     var updates = {};
 
@@ -185,9 +168,7 @@ this.setProfilePicture = function(userId) {
 }
 
 this.handleFileSelect = function(files) {
-  var storage = firebase.storage();
   var storageRef = firebase.storage().ref();
-  var imagesRef = storageRef.child('images');
   //evt.stopPropagation();
   //evt.preventDefault();
   var file = files[0];
@@ -219,7 +200,6 @@ this.handleFileSelect = function(files) {
 }
 
 this.addToDatabase = function(file, userId) {
-  var storage = firebase.storage();
   var storageRef = firebase.storage().ref();
   storageRef.child('images/' + userId + '/' + file.name).getDownloadURL().then(function(url) {
   // `url` is the download URL for the uploaded image
@@ -240,22 +220,6 @@ this.map = function(finalURL){
 
 }
 
-let allUsers = [];
-
-this.setAllUsers = function(users) {
-  allUsers = users;
-}
-
-this.checkUser = function(filter) {
-  allUsers.map((user, i) => {
-    var undef = user.indexOf(filter);
-    console.log(undef);
-    if (undef === -1) {
-      return true;
-    }
-  })
-}
-
 this.getVideos = function (filter) {
 
   const result = 48;
@@ -265,7 +229,6 @@ this.getVideos = function (filter) {
     return this.map(youtubeURL);
   }
   else {
-    const channelID = 'UCEQi1ZNJiw3YMRwni0OLsTQ'
     var finalURL = `https://www.googleapis.com/youtube/v3/search?key=${key}&part=snippet,id&order=date&maxResults=${result}`
 
     return this.map(finalURL);
@@ -274,8 +237,6 @@ this.getVideos = function (filter) {
 
 
 this.getUsers = function(filter){
-
-  //if(this.checkUser(filter)){
 
   //Get all users
 

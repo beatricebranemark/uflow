@@ -463,7 +463,7 @@ div ~ .exploreSmallYoutube + .exploreSmallYoutube:hover {
 }
 
 .otherProfile {
-    margin-top: 10px;
+    margin-top: 50px;
 }
 
 .youtubePostHead {
@@ -478,7 +478,7 @@ div ~ .exploreSmallYoutube + .exploreSmallYoutube:hover {
 }
 
 .FlowVertical {
-    margin-top: 70px;
+    margin-top: 50px;
 }
 
 .FlowVerticalVideo {
@@ -589,4 +589,18 @@ margin-top: 20px;
 	font-size: 14px;
 	float: center;
 	font-style: italic;
+}
+
+.emptyResult {
+	transition: opacity .5s, visibility .5s;
+	visibility: hidden;
+}
+
+.empty {
+	transition: opacity .5s, visibility .5s;
+	visibility: hidden;
+}
+
+.empty:hover {
+	visibility: visible;
 }

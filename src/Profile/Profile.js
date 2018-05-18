@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import NavBar from "../Navbar/Navbar";
 import { modelInstance } from '../data/model';
 import firebase from 'firebase';
@@ -17,7 +16,8 @@ class Profile extends Component {
       keys: [],
       profile_videos: [],
       currentText: '',
-      texts: []
+      texts: [],
+      status: 'INITIAL'
     };
     this.modalVideo = this.modalVideo.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
@@ -36,7 +36,10 @@ class Profile extends Component {
         this.setState({currentUser: snapshot.val()})
       })
       firebase.database().ref('/images/' + user.uid + '/image').once('value', snapshot => {
-          this.setState({profile_pic: snapshot.val()});
+          this.setState({
+            profile_pic: snapshot.val(),
+            status: 'LOADED'
+          });
       })
       var flow_videos = [];
       firebase.database().ref('/shares/' + user.uid + '/videos').once('value', snapshot => {
@@ -151,6 +154,20 @@ modalVideo(event) {
 
     render() {
 
+      let loadingIndicator = null;
+
+      switch (this.state.status) {
+        case 'INITIAL':
+        loadingIndicator = <div className="loaderIcon">Data is loading...</div>
+        break;
+        case 'LOADED':
+        loadingIndicator = ""
+        break;
+        default:
+        loadingIndicator = <b>Failed to load data, please try again</b>
+        break;
+      }
+
       console.log(this.state.profile_pic);
       var currentUser = this.state.currentUser;
       //var currentUser = this.props.model.getProfileUser;
@@ -161,13 +178,13 @@ modalVideo(event) {
         var username = currentUser.email;
         username = username.substring(0,username.indexOf("@"));
         username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
-        var ID = currentUser.id;
       }
 
 
       return (
         <div className="Profile">
           <NavBar />
+          {loadingIndicator}
           <div className="col-md-2"></div>
           <div className="col-md-10">
             <div className="row" id="profileNamePictureArea">
@@ -215,7 +232,7 @@ modalVideo(event) {
                         <button className="removeShareButton" onClick={() => this.removeShare(this.state.currentUser.id, link, this.state.texts[i])}>X</button>
                         <div className="col-md-1"></div>
                         <div className="col-md-10">
-                          <iframe className='profileVideo col-md-12' width= "840" height="472.5" key={'video' + i} src={link} frameBorder="0" allowFullScreen >
+                          <iframe className='profileVideo col-md-12' width= "840" height="472.5" key={'video' + i} title={'video' + i} src={link} frameBorder="0" allowFullScreen >
                           </iframe>
                           <div className="col-md-12" id="youtubePostButton">
                             <button className="shareButtonProfile" index={i} data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}>Share on uflow</button>

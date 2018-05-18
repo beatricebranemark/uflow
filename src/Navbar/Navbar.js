@@ -54,7 +54,7 @@ class Navbar extends Component {
 
   handleFilter = (event) => {
     //alert("Vi sparar: " + event.target.value + " i statet");
-    this.state.filter = event.target.value;
+    this.setState({filter: event.target.value});
   }
 
   handleLocation() {
@@ -75,7 +75,7 @@ class Navbar extends Component {
 
               </div>
 
-              <form className="navbar-form navbar-left" onSubmit={this.handleSearch} onClick={() => modelInstance.setAllUsers(this.state.users)}>
+              <form className="navbar-form navbar-left" onSubmit={this.handleSearch}>
                 <a className="navbar-brand" href="/explore"><img src={NavLogo} id="logo" alt="logo"/></a>
                 <div className="input-group" onClick={this.handleLocation}>
                   <input type="text" className="form-control" placeholder="Search for a video or a user" onChange={this.handleFilter} name="search" />

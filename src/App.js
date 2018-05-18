@@ -5,10 +5,8 @@ import Welcome from './Welcome/Welcome';
 import { modelInstance } from './data/model';
 import Explore from "./Explore/Explore";
 import Profile from "./Profile/Profile";
-import EditProfile from "./Profile/EditProfile";
 import OtherProfile from "./Profile/OtherProfile";
 import Signup from "./Signup/Signup";
-import Flow from './Flow/Flow';
 import FriendFlow from './FriendFlow/FriendFlow';
 
 class App extends Component {
@@ -23,11 +21,6 @@ class App extends Component {
   componentDidMount() {
     // Initialize Firebase
     modelInstance.createApp();
-
-    modelInstance.createDatabase();
-    modelInstance.createStorage();
-
-    var currentUser = this.state.currentUser;
 
     firebase.auth().onAuthStateChanged(currentUser => {
       currentUser

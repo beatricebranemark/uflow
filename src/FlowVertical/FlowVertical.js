@@ -16,7 +16,8 @@ class FlowVertical extends Component {
       currentText: '',
       texts: [],
       following_id: [],
-      usernames: []
+      usernames: [],
+      status: 'INITIAL',
     };
     this.modalVideo = this.modalVideo.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
@@ -29,17 +30,6 @@ handleChangeDescription(event) {
 
   componentDidMount() {
 
-    /*this.props.model.getVideos().then(video => {
-      this.setState({
-        status: 'LOADED',
-        resultyt: video,
-
-      })
-    }).catch(() => {
-      this.setState({
-        status: 'ERROR'
-      })
-    })*/
     modelInstance.createApp()
     firebase.auth().onAuthStateChanged(user => {
       firebase.database().ref('/users/' + user.uid).once('value', snapshot => {
@@ -66,6 +56,7 @@ handleChangeDescription(event) {
       firebase.database().ref('/follow/' + user.uid + '/following').once('value', people => {
         if (people.val() === null) {
           this.emptyFollowList();
+          this.setState({status: 'LOADED'})
         }
         else {
           var key = Object.keys(people.val());
@@ -96,7 +87,9 @@ handleChangeDescription(event) {
                           })
                           firebase.database().ref('/images/' + id + '/image').once('value', snapshot => {
                               flow_profile_pics.unshift(snapshot.val());
-                              this.setState({FlowVertical_pics: flow_profile_pics});
+                              this.setState({
+                                FlowVertical_pics: flow_profile_pics
+                              });
                           })
                         })
                       )
@@ -107,6 +100,7 @@ handleChangeDescription(event) {
 
                 this.state.following_id.map((id) =>
                   firebase.database().ref('/shares/' + id + '/texts').once('value', snapshot => {
+                    this.setState({status: 'LOADED'});
                     if (snapshot.val() !== null) {
                     var keyTwo = Object.keys(snapshot.val());
                     if (keyTwo !== undefined) {
@@ -120,16 +114,16 @@ handleChangeDescription(event) {
                   }
                   })
                 )
-
             })
           )
           }
+
         }
       })
     })
 
-
   }
+
 
   shareVideo(video) {
     if (this.state.currentUser !== null) {
@@ -175,19 +169,25 @@ handleChangeDescription(event) {
   }
 
   render() {
-    var currentUser = this.state.currentUser;
 
-    if (currentUser !== undefined) {
-      //console.log(currentUser)
-      var username = currentUser.email;
-      username = username.substring(0,username.indexOf("@"));
-      username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
-      var ID = currentUser.id;
+    let loadingIndicator = null;
+
+    switch (this.state.status) {
+      case 'INITIAL':
+      loadingIndicator = <div className="loaderIcon">Data is loading...</div>
+      break;
+      case 'LOADED':
+      loadingIndicator = ""
+      break;
+      default:
+      loadingIndicator = <b>Failed to load data, please try again</b>
+      break;
     }
 
     return (
       <div className="FlowVertical">
         <NavBar />
+        {loadingIndicator}
 
         <div className="col-md-1">
         </div>
@@ -197,7 +197,7 @@ handleChangeDescription(event) {
               this.state.FlowVertical_videos.map((link, i) => {
 
                 var frame =
-                <div>
+                <div key={i}>
                   <br></br>
                 <div className="youtubePost">
                 <div className="friendFlowArea">
@@ -208,7 +208,7 @@ handleChangeDescription(event) {
 
                   <div className="col-md-1"></div>
                   <div className="col-md-10 youtubePostVideo">
-                    <iframe className='FlowVerticalVideo col-md-12' width= "840" height="472.5" key={'video' + i} src={link} frameBorder="0" allowFullScreen >
+                    <iframe className='FlowVerticalVideo col-md-12' width= "840" height="472.5" key={'video' + i} title={'video' + i} src={link} frameBorder="0" allowFullScreen >
                     </iframe>
                     <div className="col-md-12">
                     <button className="shareButtonProfile" index={i} data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}>Share on uflow</button>

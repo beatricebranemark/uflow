@@ -1,6 +1,5 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
-import firebase from 'firebase';
 import { modelInstance } from '../data/model';
 
 const FileUpload = ({children}) => (

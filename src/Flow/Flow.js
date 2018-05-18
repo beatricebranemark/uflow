@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-import { Slide } from 'react-slideshow-image';
 import { modelInstance } from '../data/model';
 import firebase from 'firebase';
 import { Link } from 'react-router-dom';
-import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class Flow extends Component {
@@ -44,16 +42,6 @@ class Flow extends Component {
     })
   }
 
-  componentDidUpdate() {
-    if (this.state.status === 'INITIAL' && this.state.resultyt.length !== 0) {
-      setTimeout(() => {
-        this.setState({
-          status: 'LOADED'
-        })
-      }, 7000)
-    }
-  }
-
 
   componentWillUnmount() {
     this.props.model.removeObserver(this);
@@ -79,9 +67,11 @@ class Flow extends Component {
         if (undef === -1) {
           videoList.push(link);
         }
+        return video;
       })
       this.setState({
         resultyt: videoList,
+        status: 'LOADED'
       })
     }).catch(() => {
       this.setState({
@@ -96,7 +86,7 @@ class Flow extends Component {
     var allPictures = [];
     var allObjects = [];
 
-    modelInstance.createApp;
+    modelInstance.createApp();
     //Store objects, usernames and id:s
     firebase.auth().onAuthStateChanged(user => {
       //Store objects, usernames and id:s
@@ -166,36 +156,19 @@ render() {
   var userId = [];
   var profilePicture = [];
   //var userObject = {};
-  var index;
-
-  // var
-  // if (this.state > 0) {
-  //   return (
-  //     <div>
-  //
-  //     </div>
-  //   )
-  // }
-  // return (
-  //   <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" />
-  // )
 
   this.state.allUsers.map((id, i) => {
     if (modelInstance.getFilter()) {
       var filter = modelInstance.getFilter();
       var undef = id.indexOf(filter);
-      console.log(undef);
       if (undef !== -1) {
         username.push(this.state.allUsers[i]);
         userId.push(this.state.allUsersId[i]);
         profilePicture.push(this.state.allPictures[i]);
       }
     }
+    return true;
   })
-
-  console.log(username);
-  console.log(userId);
-  console.log(profilePicture);
 
   var resUsers = [];
 
@@ -215,6 +188,7 @@ render() {
             </Link>
           </div>
         )
+        return true;
       })
     }
 
@@ -222,7 +196,7 @@ render() {
     if (this.state.resultyt.length > 0) {
       topVideo =
       <div>
-        <iframe className="exploreChosenYoutube" id="promotedVideo" src={this.state.resultyt[0]} frameBorder="0" allowFullScreen></iframe>
+        <iframe className="exploreChosenYoutube" id="promotedVideo" src={this.state.resultyt[0]} title="promotedVideo" frameBorder="0" allowFullScreen></iframe>
         <input className="row exploreSmallYoutubeButton" type="button" id="sharePromotedVideo" index={0} value="Share on Uflow" data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}></input>
       </div>
     } else {
@@ -263,9 +237,9 @@ render() {
             var frame =
             <div key={i} className="exploreSmallYoutubeArea col-md-2">
               <div id={"iframeImg" + i} className="relativeDiv">
-                <img id= {"exploreSmallYoutube " + i} onClick={() => this.replaceThumbnail(link, i)} src={image} width="270px" height="155px" frameBorder="0">
+                <img id= {"exploreSmallYoutube " + i} onClick={() => this.replaceThumbnail(link, i)} src={image} width="270px" height="155px" frameBorder="0" alt="thumbnail">
                 </img>
-                <p class="img__description" onClick={() => this.replaceThumbnail(link, i)}>PLAY</p>
+                <p className="img__description" onClick={() => this.replaceThumbnail(link, i)}>PLAY</p>
               </div>
               <input className="exploreSmallYoutubeButton" type="button" id="shareSingleVideo" index={i} value="Share on U-flow" data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}></input>
             </div>

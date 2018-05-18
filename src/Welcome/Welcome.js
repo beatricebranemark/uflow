@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import logo from '../images/logo.jpg';
 import { modelInstance } from '../data/model';
-import NavBar from "../Navbar/Navbar";
 
 class Welcome extends Component {
 
-  constructor(props) {
-    super(props)
-  }
     render() {
 
       return (

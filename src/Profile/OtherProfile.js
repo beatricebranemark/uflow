@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import NavBar from "../Navbar/Navbar";
 import { modelInstance } from '../data/model';
 import firebase from 'firebase';
@@ -16,7 +15,8 @@ class OtherProfile extends Component {
       profile_pic: null,
       profile_videos: [],
       currentText: '',
-      texts: []
+      texts: [],
+      status: 'INITIAL'
     };
     this.modalVideo = this.modalVideo.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
@@ -39,7 +39,10 @@ class OtherProfile extends Component {
         this.setState({profileUser: snapshot.val()})
       })
       firebase.database().ref('/images/' + userId + '/image').once('value', snapshot => {
-          this.setState({profile_pic: snapshot.val()});
+          this.setState({
+            profile_pic: snapshot.val(),
+            status: 'LOADED'
+          });
       })
       var flow_videos = [];
       firebase.database().ref('/shares/' + userId + '/videos').once('value', snapshot => {
@@ -120,6 +123,7 @@ class OtherProfile extends Component {
     }
     else {
       modelInstance.follow(userid, followid);
+      window.location = "friendflow";
     }
 
   }
@@ -164,6 +168,9 @@ class OtherProfile extends Component {
 
   emptySharesList() {
     var position = document.getElementById("profileFlow");
+    if (position === null) {
+      window.location = "explore";
+    }
     var col = document.createElement("div");
     col.className = "col-md-1";
     position.appendChild(col);
@@ -177,6 +184,20 @@ class OtherProfile extends Component {
 
   render() {
 
+    let loadingIndicator = null;
+
+    switch (this.state.status) {
+      case 'INITIAL':
+      loadingIndicator = <div className="loaderIcon">Data is loading...</div>
+      break;
+      case 'LOADED':
+      loadingIndicator = ""
+      break;
+      default:
+      loadingIndicator = <b>Failed to load data, please try again</b>
+      break;
+    }
+
     var profileUser = this.state.profileUser;
     //var profileUser = this.props.model.getProfileUser;
 
@@ -185,13 +206,12 @@ class OtherProfile extends Component {
       var username = profileUser.email;
       username = username.substring(0,username.indexOf("@"));
       username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
-      var ID = profileUser.id;
     }
 
     return (
       <div className="otherProfile">
         <NavBar />
-
+        {loadingIndicator}
         <div className="col-md-2">
         </div>
 
@@ -231,7 +251,7 @@ class OtherProfile extends Component {
 
                   <div className="col-md-1"></div>
                   <div className="col-md-10">
-                    <iframe className='profileVideo col-md-12' width= "840" height="472.5" key={'video' + i} src={link} frameBorder="0" allowFullScreen >
+                    <iframe className='profileVideo col-md-12' width= "840" height="472.5" key={'video' + i} title={'video' + i} src={link} frameBorder="0" allowFullScreen >
                     </iframe>
                     <div className="col-md-12" id="youtubePostButton">
                     <button className="shareButtonProfile " index={i} data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}>Share on uflow</button>
