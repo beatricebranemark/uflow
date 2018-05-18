@@ -470,6 +470,7 @@ div ~ .exploreSmallYoutube + .exploreSmallYoutube:hover {
     margin-left: 10px;
     margin-top: 20px;
     margin-bottom: 0px;
+		color: #d6d6d6;
 }
 
 .youtubePostVideo{
@@ -568,5 +569,24 @@ margin-top: 20px;
 	margin-top:20px;
 	text-align: center;
 	color: white;
+	font-style: italic;
+}
+
+.changeProfilePic {
+	color: #d6d6d6;
+	font-size: 16px;
+	float: center;
+	padding-top: 8px;
+	height: 40px;
+	width: 200px;
+	margin-bottom: 10px;
+	margin-left: 140px;
+	background-color: #3a3a3a;
+}
+
+.changeProfilePicUndertext {
+	color: #d6d6d6;
+	font-size: 14px;
+	float: center;
 	font-style: italic;
 }

@@ -38,6 +38,9 @@ class OtherProfile extends Component {
         console.log(snapshot.val());
         this.setState({profileUser: snapshot.val()})
       })
+      firebase.database().ref('/images/' + userId + '/image').once('value', snapshot => {
+          this.setState({profile_pic: snapshot.val()});
+      })
       var flow_videos = [];
       firebase.database().ref('/shares/' + userId + '/videos').once('value', snapshot => {
         //console.log(snapshot.val())
@@ -179,7 +182,6 @@ class OtherProfile extends Component {
 
     if (profileUser !== undefined) {
       //console.log(profileUser)
-      var profile_pic = profileUser.profile_pic;
       var username = profileUser.email;
       username = username.substring(0,username.indexOf("@"));
       username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
@@ -205,7 +207,7 @@ class OtherProfile extends Component {
             </div>
 
             <div className="ProfilePictureArea col-md-5">
-              <img id="profilePicture" src={profile_pic} alt="profilePicture" />
+              <img id="profilePicture" src={this.state.profile_pic} alt="profilePicture" />
             </div>
 
 
@@ -223,7 +225,7 @@ class OtherProfile extends Component {
                 <div>
                 <div className="youtubePost">
                   <div className="youtubePostHead row">
-                    <img className="col-md-6 profilePictureSmall" src={profile_pic} alt="profilePictureSmall" />
+                    <img className="col-md-6 profilePictureSmall" src={this.state.profile_pic} alt="profilePictureSmall" />
                     <h2 className="col-md-6">{username}<p></p><p className="postText">{this.state.texts[i]}</p></h2>
                   </div>
 

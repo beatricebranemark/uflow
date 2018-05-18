@@ -11,15 +11,20 @@ class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = ({
-      currentUser: null
+      currentUser: null,
+      profile_pic: null
     })
   }
 
   componentDidMount() {
-    modelInstance.createApp()
+    modelInstance.createApp();
     firebase.auth().onAuthStateChanged(user => {
       firebase.database().ref('/users/' + user.uid).once('value', snapshot => {
+        modelInstance.setProfilePicture(user.uid);
         this.setState({currentUser: snapshot.val()})
+        firebase.database().ref('/images/' + user.uid + '/image').once('value', snapshot => {
+            this.setState({profile_pic: snapshot.val()});
+        })
       })
     })
   }
@@ -33,8 +38,6 @@ class Signup extends Component {
       var currentUser = this.state.currentUser;
 
       if (currentUser !== null) {
-
-        var profile_pic = currentUser.profile_pic;
         var username = currentUser.email;
         username = username.substring(0,username.indexOf("@"));
         username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
@@ -51,12 +54,9 @@ class Signup extends Component {
               <img className="img-responsive welcomeLogo" src={logo} alt="logo"/>
               <h2>Welcome @{username}!</h2>
               <div id="welcomePhoto">
-                <img id="profilePicture" src={profile_pic} alt="profilePicture" />
+                <img id="profilePicture" src={this.state.profile_pic} alt="profilePicture" />
               </div>
               <br></br>
-                <div id="uploadImage">
-                 <input type="file" id="file" name="file" onChange={modelInstance.handleFileSelect} onClick={() => modelInstance.setCurrentUser(this.state.currentUser.id)}></input>
-               </div>
 
               <Link to="/explore">
                 <button className="actionButton" type="submit" value="Continue">Continue</button>

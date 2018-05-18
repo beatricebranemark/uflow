@@ -34,29 +34,6 @@ const Model = function () {
     var imagesRef = storageRef.child('images');
   }
 
-  this.handleFileSelect = function(evt) {
-    var storage = firebase.storage();
-    var storageRef = firebase.storage().ref();
-    var imagesRef = storageRef.child('images');
-    evt.stopPropagation();
-    evt.preventDefault();
-    var file = evt.target.files[0];
-    var metadata = {
-      'contentType': file.type
-    };
-    // Push to child path.
-    // [START oncomplete]
-    storageRef.child('images/' + file.name).put(file, metadata).then(function(snapshot) {
-      console.log('Uploaded', snapshot.totalBytes, 'bytes.');
-      console.log('File metadata:', snapshot.metadata);
-    }).catch(function(error) {
-      // [START onfailure]
-      console.error('Upload failed:', error);
-      // [END onfailure]
-    });
-    // [END oncomplete]
-  }
-
   //This function is called when a user logs in via Google. It adds the user in
   //the database.
   this.writeUserData = function(email, id, profile_pic, username, fullName) {
@@ -185,15 +162,36 @@ this.googleLogout = function() {
   });
 }
 
-this.handleFileSelect = function(evt) {
+var currentUser = null;
+
+this.setCurrentUser = function(id) {
+  currentUser = id;
+}
+
+this.setProfilePicture = function(userId) {
+  this.createApp();
+  firebase.database().ref('/images/' + userId + '/image').once('value', snapshot => {
+    if (snapshot.val() !== "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg") {
+      return;
+    }
+    else {
+      firebase.database().ref('/images/' + userId).set({
+        image: "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"
+      });
+    }
+  })
+}
+
+this.handleFileSelect = function(files) {
   var storage = firebase.storage();
   var storageRef = firebase.storage().ref();
   var imagesRef = storageRef.child('images');
-  evt.stopPropagation();
-  evt.preventDefault();
-  var file = evt.target.files[0];
-  console.log(file);
-  var userId = this.getCurrentUser();
+  //evt.stopPropagation();
+  //evt.preventDefault();
+  var file = files[0];
+  var userId = currentUser;
+  console.log(userId);
+  //var userId = this.getCurrentUser();
   var metadata = {
     'contentType': file.type
   };
@@ -202,22 +200,32 @@ this.handleFileSelect = function(evt) {
   storageRef.child('images/' + userId + '/' + file.name).put(file, metadata).then(function(snapshot) {
     console.log('Uploaded', snapshot.totalBytes, 'bytes.');
     console.log('File metadata:', snapshot.metadata);
+    storageRef.child('images/' + userId + '/' + file.name).getDownloadURL().then(function(url) {
+    // `url` is the download URL for the uploaded image
+    firebase.database().ref('/images/' + userId).set({
+      image: url
+    });
+    window.location = "profile";
+    }).catch(function(error) {
+      console.log(error)
+    });
   }).catch(function(error) {
     // [START onfailure]
     console.error('Upload failed:', error);
     // [END onfailure]
   });
+}
+
+this.addToDatabase = function(file, userId) {
+  var storage = firebase.storage();
+  var storageRef = firebase.storage().ref();
+  storageRef.child('images/' + userId + '/' + file.name).getDownloadURL().then(function(url) {
+  // `url` is the download URL for the uploaded image
+  console.log(url);
+}).catch(function(error) {
+  console.log(error)
+});
   // [END oncomplete]
-}
-
-var currentUser = null;
-
-this.setCurrentUser = function(id) {
-  currentUser = id;
-}
-
-this.getCurrentUser = function() {
-  return currentUser;
 }
 
 // API Calls
@@ -226,7 +234,7 @@ this.map = function(finalURL){
 
   return fetch(finalURL)
   .then(res => res.json())
-  .then(json => json.items.map(obj => "https://www.youtube.com/embed/"+obj.id.videoId))
+  .then(json => json.items.map(obj => "https://www.youtube.com/embed/"+ obj.id.videoId))
 
 }
 

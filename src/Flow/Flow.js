@@ -120,17 +120,13 @@ class Flow extends Component {
     firebase.database().ref('/users/').once('value', snapshot => {
       var key = Object.keys(snapshot.val());
       key.map((key) =>
-      firebase.database().ref('/users/' + key + '/profile_pic').once('value', pic => {
+      firebase.database().ref('/images/' + key + '/image').once('value', pic => {
         allPictures.push(pic.val());
-        this.setState({allPictures: allPictures})
+        this.setState({allPictures: allPictures});
       })
     )
+    })
   })
-
-})
-
-
-
 }
 
 modalVideo(event) {
@@ -263,7 +259,6 @@ render() {
         {
           this.state.resultyt.map((link, i) => {
             var imgLink = link.split("embed/");
-            console.log(imgLink[1]);
             var image = "https://img.youtube.com/vi/" + imgLink[1] + "/sddefault.jpg";
             var frame =
             <div key={i} className="exploreSmallYoutubeArea col-md-2">

@@ -15,7 +15,6 @@ class Profile extends Component {
     this.state = {
       users: [],
       keys: [],
-      profile_pic: null,
       profile_videos: [],
       currentText: '',
       texts: []
@@ -32,8 +31,12 @@ class Profile extends Component {
     modelInstance.getProfileUser();
     modelInstance.createApp()
     firebase.auth().onAuthStateChanged(user => {
+      modelInstance.setCurrentUser(user.uid);
       firebase.database().ref('/users/' + user.uid).once('value', snapshot => {
         this.setState({currentUser: snapshot.val()})
+      })
+      firebase.database().ref('/images/' + user.uid + '/image').once('value', snapshot => {
+          this.setState({profile_pic: snapshot.val()});
       })
       var flow_videos = [];
       firebase.database().ref('/shares/' + user.uid + '/videos').once('value', snapshot => {
@@ -147,31 +150,36 @@ modalVideo(event) {
     };
 
     render() {
+
+      console.log(this.state.profile_pic);
       var currentUser = this.state.currentUser;
       //var currentUser = this.props.model.getProfileUser;
 
       if (currentUser !== undefined) {
         //console.log(currentUser)
-        var profile_pic = currentUser.profile_pic;
+        //var profile_pic = currentUser.profile_pic;
         var username = currentUser.email;
         username = username.substring(0,username.indexOf("@"));
         username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
         var ID = currentUser.id;
       }
 
-  return (
-    <div className="Profile">
-      <NavBar />
-        <div className="col-md-10">
-          <div className="row" id="profileNamePictureArea">
-            <div className="col-md-6">
-              <h3 id="profileName"> {username}
-                <FileUpload><span className="glyphicon glyphicon-plus"></span></FileUpload>
-              </h3>
-            </div>
+
+      return (
+        <div className="Profile">
+          <NavBar />
+          <div className="col-md-2"></div>
+          <div className="col-md-10">
+            <div className="row" id="profileNamePictureArea">
+              <div className="col-md-6">
+                <h3 id="profileName"> {username}
+                </h3>
+                <FileUpload><p className="changeProfilePic">Change profile picture</p></FileUpload>
+                <p className="changeProfilePicUndertext">Drag an image to the box or click on it</p>
+              </div>
 
               <div className="ProfilePictureArea col-md-5">
-                <img id="profilePicture" src={profile_pic} alt="profilePicture" />
+                <img id="profilePicture" src={this.state.profile_pic} alt="profilePicture" />
                 <br></br>
               </div>
 
@@ -201,7 +209,7 @@ modalVideo(event) {
                     <div>
                       <div className="youtubePost">
                         <div className="youtubePostHead row">
-                          <img className="col-md-6 profilePictureSmall" src={profile_pic} alt="profilePictureSmall" />
+                          <img className="col-md-6 profilePictureSmall" src={this.state.profile_pic} alt="profilePictureSmall" />
                           <h2 className="col-md-6">{username}<p></p><p className="postText">{this.state.texts[i]}</p></h2>
                         </div>
                         <button className="removeShareButton" onClick={() => this.removeShare(this.state.currentUser.id, link, this.state.texts[i])}>X</button>

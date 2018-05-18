@@ -64,7 +64,6 @@ handleChangeDescription(event) {
       })
       var following = [];
       firebase.database().ref('/follow/' + user.uid + '/following').once('value', people => {
-        console.log(people.val())
         if (people.val() === null) {
           this.emptyFollowList();
         }
@@ -73,7 +72,6 @@ handleChangeDescription(event) {
           if (key !== undefined) {
             key.map((key) =>
             firebase.database().ref('/follow/' + user.uid + '/following/' + key).once('value', person => {
-              console.log(person.val())
               following.push(person.val());
               this.setState({following_id: following})
               var flow_videos = [];
@@ -85,22 +83,20 @@ handleChangeDescription(event) {
                   firebase.database().ref('/shares/' + id + '/videos').once('value', snapshot => {
                     if (snapshot.val() !== null) {
                     var keyTwo = Object.keys(snapshot.val());
-                    console.log(keyTwo)
                     if (keyTwo !== undefined) {
                       keyTwo.map((keyTwo) =>
                         firebase.database().ref('/shares/' + id + '/videos/' + keyTwo).once('value', videos => {
                           flow_id_navigate.unshift(id);
                           this.setState({navigate_id: flow_id_navigate})
                           flow_videos.unshift(videos.val());
-                          console.log(videos.val())
                           this.setState({FlowVertical_videos: flow_videos});
                           firebase.database().ref('/users/' + id + '/username').once('value', usernames => {
                             flow_usernames.unshift(usernames.val());
                             this.setState({usernames: flow_usernames});
                           })
-                          firebase.database().ref('/users/' + id + '/profile_pic').once('value', profile_pic => {
-                            flow_profile_pics.unshift(profile_pic.val());
-                            this.setState({FlowVertical_pics: flow_profile_pics});
+                          firebase.database().ref('/images/' + id + '/image').once('value', snapshot => {
+                              flow_profile_pics.unshift(snapshot.val());
+                              this.setState({FlowVertical_pics: flow_profile_pics});
                           })
                         })
                       )
@@ -188,7 +184,6 @@ handleChangeDescription(event) {
       username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
       var ID = currentUser.id;
     }
-    console.log(this.state.navigate_id)
 
     return (
       <div className="FlowVertical">
