@@ -20,7 +20,7 @@ class OtherProfile extends Component {
     };
     this.modalVideo = this.modalVideo.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
-}
+  }
 
   handleChangeDescription(event) {
     this.setState({currentText: event.target.value});
@@ -29,24 +29,20 @@ class OtherProfile extends Component {
   componentDidMount() {
 
     var userId = this.props.model.getProfileUser();
-    console.log(userId);
 
     modelInstance.createApp()
     firebase.auth().onAuthStateChanged(user => {
       firebase.database().ref('/users/' + userId).once('value', snapshot => {
-        //console.log(userId);
-        console.log(snapshot.val());
         this.setState({profileUser: snapshot.val()})
       })
       firebase.database().ref('/images/' + userId + '/image').once('value', snapshot => {
-          this.setState({
-            profile_pic: snapshot.val(),
-            status: 'LOADED'
-          });
+        this.setState({
+          profile_pic: snapshot.val(),
+          status: 'LOADED'
+        });
       })
       var flow_videos = [];
       firebase.database().ref('/shares/' + userId + '/videos').once('value', snapshot => {
-        //console.log(snapshot.val())
         if (snapshot.val() === null) {
           this.emptySharesList();
         }
@@ -54,114 +50,108 @@ class OtherProfile extends Component {
           var key = Object.keys(snapshot.val());
           if (key !== undefined) {
             key.map((key) =>
-              firebase.database().ref('/shares/' + userId + '/videos/' + key).once('value', videos => {
-                flow_videos.unshift(videos.val());
-                this.setState({profile_videos: flow_videos});
-              })
-            );
-          }
+            firebase.database().ref('/shares/' + userId + '/videos/' + key).once('value', videos => {
+              flow_videos.unshift(videos.val());
+              this.setState({profile_videos: flow_videos});
+            })
+          );
         }
-      })
-      var videoTexts = [];
-      firebase.database().ref('/shares/' + userId + '/texts').once('value', snapshot => {
-        //console.log(snapshot.val())
-        if (snapshot.val() !== null) {
-          var key = Object.keys(snapshot.val());
-          if (key !== undefined) {
-            key.map((key) =>
-              firebase.database().ref('/shares/' + userId + '/texts/' + key).once('value', snapshot => {
-                videoTexts.unshift(snapshot.val());
-                //console.log(snapshot.val())
-                this.setState({texts: videoTexts});
-              })
-            );
-          }
-        }
-      })
-
-      var allUsers = [];
-      var allUsersId = [];
-      firebase.database().ref('/users/').once('value', snapshot => {
+      }
+    })
+    var videoTexts = [];
+    firebase.database().ref('/shares/' + userId + '/texts').once('value', snapshot => {
+      if (snapshot.val() !== null) {
         var key = Object.keys(snapshot.val());
-        //console.log(key);
-        key.map((key) =>
-        firebase.database().ref('/users/' + key + '/id').once('value', id => {
-          allUsers.push(id.val());
-          //console.log(allUsers);
-          allUsersId.push(key);
-          //console.log(allUsersId);
-          this.setState({
-            users: allUsers,
-            keys: allUsersId});
-        })
+        if (key !== undefined) {
+          key.map((key) =>
+          firebase.database().ref('/shares/' + userId + '/texts/' + key).once('value', snapshot => {
+            videoTexts.unshift(snapshot.val());
+            this.setState({texts: videoTexts});
+          })
+        );
+      }
+    }
+  })
+
+  var allUsers = [];
+  var allUsersId = [];
+  firebase.database().ref('/users/').once('value', snapshot => {
+    var key = Object.keys(snapshot.val());
+    key.map((key) =>
+    firebase.database().ref('/users/' + key + '/id').once('value', id => {
+      allUsers.push(id.val());
+      allUsersId.push(key);
+      this.setState({
+        users: allUsers,
+        keys: allUsersId});
+      })
+    )
+  })
+  firebase.database().ref('/users/' + user.uid).once('value', snapshot => {
+    this.setState({currentUser: snapshot.val()})
+  })
+})
+}
+
+shareVideo(video) {
+  if (this.state.profileUser !== null) {
+    modelInstance.shareVideo(video, this.props.profileuserId);
+  }
+}
+
+startFollow(userid, followid) {
+  if (userid === followid) {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='custom-ui'>
+            <p>Sorry, you can not follow yourself.</p>
+            <button onClick={onClose}>Ok</button>
+          </div>
         )
-      })
-      firebase.database().ref('/users/' + user.uid).once('value', snapshot => {
-        this.setState({currentUser: snapshot.val()})
-      })
+      }
     })
   }
-
-  shareVideo(video) {
-    if (this.state.profileUser !== null) {
-      modelInstance.shareVideo(video, this.props.profileuserId);
-    }
+  else {
+    modelInstance.follow(userid, followid);
+    window.location = "friendflow";
   }
 
-  startFollow(userid, followid) {
-    if (userid === followid) {
-      confirmAlert({
-        customUI: ({ onClose }) => {
-          return (
-            <div className='custom-ui'>
-              <p>Sorry, you can not follow yourself.</p>
-              <button onClick={onClose}>Ok</button>
-            </div>
-            )
-          }
-        })
-    }
-    else {
-      modelInstance.follow(userid, followid);
-      window.location = "friendflow";
-    }
+}
 
+stopFollow(userid, followid) {
+  if (userid === followid) {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='custom-ui'>
+            <p>Sorry, you can not stop following yourself.</p>
+            <button onClick={onClose}>Ok</button>
+          </div>
+        )
+      }
+    })
   }
-
-  stopFollow(userid, followid) {
-    if (userid === followid) {
-      confirmAlert({
-        customUI: ({ onClose }) => {
-          return (
-            <div className='custom-ui'>
-              <p>Sorry, you can not stop following yourself.</p>
-              <button onClick={onClose}>Ok</button>
-            </div>
-            )
-          }
-        })
-    }
-    else {
-      modelInstance.stopFollow(userid, followid);
-    }
+  else {
+    modelInstance.stopFollow(userid, followid);
   }
+}
 
-  modalVideo(event) {
-    var position = document.getElementById("shareVideoArea");
-    if(position.firstChild){
-      position.firstChild.remove();
-    }
-    var inputField = document.getElementById("modalDescriptionBoxShare");
-    if(inputField.value){
-     inputField.value = [];
-    }
-    var video = document.createElement("iframe");
-    var index = event.target.attributes.getNamedItem("index").value;
-    var src = this.state.profile_videos[index];
-    video.src = src;
-    this.setState({
-      currentVideo: src})
-    //video.className = "col-md-7";
+modalVideo(event) {
+  var position = document.getElementById("shareVideoArea");
+  if(position.firstChild){
+    position.firstChild.remove();
+  }
+  var inputField = document.getElementById("modalDescriptionBoxShare");
+  if(inputField.value){
+    inputField.value = [];
+  }
+  var video = document.createElement("iframe");
+  var index = event.target.attributes.getNamedItem("index").value;
+  var src = this.state.profile_videos[index];
+  video.src = src;
+  this.setState({
+    currentVideo: src})
     video.id = "modalVideo";
     position.appendChild(video);
   }
@@ -199,10 +189,8 @@ class OtherProfile extends Component {
     }
 
     var profileUser = this.state.profileUser;
-    //var profileUser = this.props.model.getProfileUser;
 
     if (profileUser !== undefined) {
-      //console.log(profileUser)
       var username = profileUser.email;
       username = username.substring(0,username.indexOf("@"));
       username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
@@ -221,9 +209,9 @@ class OtherProfile extends Component {
             <div className="col-md-6">
               <h3 id="profileName"> {username}</h3>
               <div id="followButtons">
-                  <button className="followButton exploreSmallYoutubeButton" id="follow" onClick={ () => this.startFollow(this.state.currentUser.id, this.state.profileUser.id)}>Follow</button>
-                  <button className="exploreSmallYoutubeButton" id="follow" onClick={() => this.stopFollow(this.state.currentUser.id, this.state.profileUser.id)}>Stop Following</button>
-                </div>
+                <button className="followButton exploreSmallYoutubeButton" id="follow" onClick={ () => this.startFollow(this.state.currentUser.id, this.state.profileUser.id)}>Follow</button>
+                <button className="exploreSmallYoutubeButton" id="follow" onClick={() => this.stopFollow(this.state.currentUser.id, this.state.profileUser.id)}>Stop Following</button>
+              </div>
             </div>
 
             <div className="ProfilePictureArea col-md-5">
@@ -233,9 +221,9 @@ class OtherProfile extends Component {
 
 
           </div>
-          </div>
-          <div className="col-md-1"></div>
-          <div  className="col-md-10">
+        </div>
+        <div className="col-md-1"></div>
+        <div  className="col-md-10">
 
           <div id="profileFlow">
             {
@@ -243,22 +231,22 @@ class OtherProfile extends Component {
 
                 var frame =
                 <div>
-                <div className="youtubePost">
-                  <div className="youtubePostHead row">
-                    <img className="col-md-6 profilePictureSmall" src={this.state.profile_pic} alt="profilePictureSmall" />
-                    <h2 className="col-md-6">{username}<p></p><p className="postText">{this.state.texts[i]}</p></h2>
-                  </div>
+                  <div className="youtubePost">
+                    <div className="youtubePostHead row">
+                      <img className="col-md-6 profilePictureSmall" src={this.state.profile_pic} alt="profilePictureSmall" />
+                      <h2 className="col-md-6">{username}<p></p><p className="postText">{this.state.texts[i]}</p></h2>
+                    </div>
 
-                  <div className="col-md-1"></div>
-                  <div className="col-md-10">
-                    <iframe className='profileVideo col-md-12' width= "840" height="472.5" key={'video' + i} title={'video' + i} src={link} frameBorder="0" allowFullScreen >
-                    </iframe>
-                    <div className="col-md-12" id="youtubePostButton">
-                    <button className="shareButtonProfile " index={i} data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}>Share on uflow</button>
+                    <div className="col-md-1"></div>
+                    <div className="col-md-10">
+                      <iframe className='profileVideo col-md-12' width= "840" height="472.5" key={'video' + i} title={'video' + i} src={link} frameBorder="0" allowFullScreen >
+                      </iframe>
+                      <div className="col-md-12" id="youtubePostButton">
+                        <button className="shareButtonProfile " index={i} data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}>Share on uflow</button>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <br></br>
+                  <br></br>
                 </div>
                 return frame;
               })
@@ -293,9 +281,9 @@ class OtherProfile extends Component {
             </div>
           </div>
         </div>
-    </div>
-  );
-}
+      </div>
+    );
+  }
 }
 
 export default OtherProfile;

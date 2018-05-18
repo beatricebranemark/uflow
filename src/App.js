@@ -24,9 +24,9 @@ class App extends Component {
 
     firebase.auth().onAuthStateChanged(currentUser => {
       currentUser
-        ? this.setState(() => ({ currentUser }))
-        : this.setState(() => ({ currentUser: null }));
-        modelInstance.writeUserData(currentUser.email, currentUser.uid, currentUser.photoURL, currentUser.email, currentUser.displayName);
+      ? this.setState(() => ({ currentUser }))
+      : this.setState(() => ({ currentUser: null }));
+      modelInstance.writeUserData(currentUser.email, currentUser.uid, currentUser.photoURL, currentUser.email, currentUser.displayName);
     });
 
   }
@@ -35,16 +35,14 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {/*<h1 className="App-title">{this.state.title}</h1>*/}
 
-          {/* We rended diffrent component based on the path */}
+          {/* We render diffrent component based on the path */}
           <Route exact path="/" render={() => <Welcome model={modelInstance} currentUser={this.state.currentUser}/>}/>
           <Route path="/signup" render={() => <Signup model={modelInstance} currentUser={this.state.currentUser}/>}/>
           <Route path="/explore" render={() => <Explore model={modelInstance} currentUser={this.state.currentUser}/>}/>
           <Route path="/friendflow" render={() => <FriendFlow model={modelInstance} currentUser={this.state.currentUser}/>}/>
           <Route path="/profile" render={() => <Profile model={modelInstance} currentUser={this.state.currentUser}/>}/>
           <Route path="/otherProfile" render={() => <OtherProfile model={modelInstance} currentUser={this.state.currentUser}/>}/>
-          {/*<Route path="/edit" render={() => <EditProfile model={modelInstance} currentUser={this.state.currentUser}/>}/>*/}
 
         </header>
       </div>

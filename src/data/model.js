@@ -29,7 +29,6 @@ const Model = function () {
     var name = email;
     name = name.substring(0,username.indexOf("@"));
     name = name.replace(/[^a-z0-9]+|\s+/gmi, "");
-    //console.log(name);
 
     firebase.database().ref('/users/' + id).set({
       email: email,
@@ -99,7 +98,6 @@ const Model = function () {
 
 this.removeShare = function(user_id, video, text) {
   firebase.database().ref('/shares/' + user_id + '/texts').once('value', snapshot => {
-    console.log(snapshot.val())
     if (snapshot.val() !== null) {
       var key = Object.keys(snapshot.val());
       if (key !== undefined) {
@@ -155,11 +153,9 @@ this.setProfilePicture = function(userId) {
   this.createApp();
   firebase.database().ref('/images/' + userId + '/image').once('value', snapshot => {
     if (snapshot.val() !== "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg" && snapshot.val() !== null) {
-      console.log("return")
       return;
     }
     else {
-      console.log("first time")
       firebase.database().ref('/images/' + userId).set({
         image: "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"
       });
@@ -169,17 +165,13 @@ this.setProfilePicture = function(userId) {
 
 this.handleFileSelect = function(files) {
   var storageRef = firebase.storage().ref();
-  //evt.stopPropagation();
-  //evt.preventDefault();
+
   var file = files[0];
   var userId = currentUser;
-  console.log(userId);
-  //var userId = this.getCurrentUser();
   var metadata = {
     'contentType': file.type
   };
-  // Push to child path.
-  // [START oncomplete]
+
   storageRef.child('images/' + userId + '/' + file.name).put(file, metadata).then(function(snapshot) {
     console.log('Uploaded', snapshot.totalBytes, 'bytes.');
     console.log('File metadata:', snapshot.metadata);

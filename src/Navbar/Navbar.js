@@ -29,14 +29,11 @@ class Navbar extends Component {
         //console.log(allUsers);
         this.setState({
           users: allUsers});
-      })
+        })
       )
     })
   }
 
-  componentWillUnmount() {
-    //this.props.model.removeObserver(this);
-  }
 
   update() {
     this.setState({
@@ -53,7 +50,6 @@ class Navbar extends Component {
   }
 
   handleFilter = (event) => {
-    //alert("Vi sparar: " + event.target.value + " i statet");
     this.setState({filter: event.target.value});
   }
 

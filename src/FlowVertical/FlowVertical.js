@@ -39,13 +39,10 @@ handleChangeDescription(event) {
       var allUsersId = [];
       firebase.database().ref('/users/').once('value', snapshot => {
         var key = Object.keys(snapshot.val());
-        //console.log(key);
         key.map((key) =>
           firebase.database().ref('/users/' + key + '/username').once('value', username => {
             allUsers.push(username.val());
-            //console.log(allUsers);
             allUsersId.push(key)
-            //console.log(allUsersId)
             this.setState({
               users: allUsers,
               keys: allUsersId});
@@ -146,7 +143,6 @@ handleChangeDescription(event) {
     video.src = src;
     this.setState({
       currentVideo: src})
-    //video.className = "col-md-7";
     video.id = "modalVideo";
     position.appendChild(video);
   }

@@ -76,13 +76,10 @@ class Profile extends Component {
   var allUsersId = [];
   firebase.database().ref('/users/').once('value', snapshot => {
     var key = Object.keys(snapshot.val());
-    //console.log(key);
     key.map((key) =>
     firebase.database().ref('/users/' + key + '/username').once('value', username => {
       allUsers.push(username.val());
-      //console.log(allUsers);
       allUsersId.push(key)
-      //console.log(allUsersId)
       this.setState({
         users: allUsers,
         keys: allUsersId});
@@ -166,11 +163,8 @@ modalVideo(event) {
       }
 
       var currentUser = this.state.currentUser;
-      //var currentUser = this.props.model.getProfileUser;
 
       if (currentUser !== undefined) {
-        //console.log(currentUser)
-        //var profile_pic = currentUser.profile_pic;
         var username = currentUser.email;
         username = username.substring(0,username.indexOf("@"));
         username = username.replace(/[^a-z0-9]+|\s+/gmi, "");
@@ -195,19 +189,6 @@ modalVideo(event) {
                 <img id="profilePicture" src={this.state.profile_pic} alt="profilePicture" />
                 <br></br>
               </div>
-
-              {/*<div id="users">
-                {this.state.users.map((user, i) => {
-                var userDiv =
-                <div>
-                <p id={i}>{user}</p>
-                <button className="followButton" onClick={ () => modelInstance.follow(this.state.currentUser.id, this.state.keys[i])}>Follow</button>
-                <button onClick={() => modelInstance.stopFollow(this.state.currentUser.id, this.state.keys[i])}>Stop Following</button>
-                </div>
-                return userDiv;
-                })
-                }
-                </div>*/}
 
               </div>
             </div>
