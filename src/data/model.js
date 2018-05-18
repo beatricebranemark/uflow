@@ -171,10 +171,12 @@ this.setCurrentUser = function(id) {
 this.setProfilePicture = function(userId) {
   this.createApp();
   firebase.database().ref('/images/' + userId + '/image').once('value', snapshot => {
-    if (snapshot.val() !== "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg") {
+    if (snapshot.val() !== "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg" && snapshot.val() !== null) {
+      console.log("return")
       return;
     }
     else {
+      console.log("first time")
       firebase.database().ref('/images/' + userId).set({
         image: "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"
       });
@@ -320,13 +322,6 @@ this.getProfileUser = function () {
 this.setProfileUser = function (userId) {
   profileUser = userId;
   console.log(profileUser)
-}
-this.setProfileUser = function (username) {
-  profileUser = username;
-}
-
-this.setProfileUser = function (username) {
-  profileUser = username;
 }
 
 this.getFilter = function () {

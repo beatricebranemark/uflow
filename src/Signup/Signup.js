@@ -22,9 +22,9 @@ class Signup extends Component {
       firebase.database().ref('/users/' + user.uid).once('value', snapshot => {
         modelInstance.setProfilePicture(user.uid);
         this.setState({currentUser: snapshot.val()})
-        firebase.database().ref('/images/' + user.uid + '/image').once('value', snapshot => {
-            this.setState({profile_pic: snapshot.val()});
-        })
+      })
+      firebase.database().ref('/images/' + user.uid + '/image').once('value', snapshot => {
+          this.setState({profile_pic: snapshot.val()});
       })
     })
   }
