@@ -248,7 +248,7 @@ this.checkUser = function(filter) {
 
 this.getVideos = function (filter) {
 
-  const result = 30;
+  const result = 48;
   if (filter) {
     //videos
     var youtubeURL = `https://www.googleapis.com/youtube/v3/search?key=${key}&part=snippet,id&q=${filter}&order=relevance&maxResults=${result}`;

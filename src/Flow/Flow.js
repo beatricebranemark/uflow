@@ -267,9 +267,10 @@ render() {
             var image = "https://img.youtube.com/vi/" + imgLink[1] + "/sddefault.jpg";
             var frame =
             <div key={i} className="exploreSmallYoutubeArea col-md-2">
-              <div id={"iframeImg" + i}>
+              <div id={"iframeImg" + i} className="relativeDiv">
                 <img id= {"exploreSmallYoutube " + i} onClick={() => this.replaceThumbnail(link, i)} src={image} width="270px" height="155px" frameBorder="0">
                 </img>
+                <p class="img__description" onClick={() => this.replaceThumbnail(link, i)}>PLAY</p>
               </div>
               <input className="exploreSmallYoutubeButton" type="button" id="shareSingleVideo" index={i} value="Share on U-flow" data-toggle="modal" data-target="#shareModal" onClick={this.modalVideo}></input>
             </div>

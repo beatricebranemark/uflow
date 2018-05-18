@@ -535,3 +535,27 @@ margin-top: 20px;
 	color: #d6d6d6;
 	margin-top: 50px;
 }
+
+.relativeDiv {
+	position: relative;
+}
+
+.img__description {
+  position: absolute;
+  top: 55px;
+  bottom: 0;
+  left: 95px;
+  right: 0;
+  color: #fff;
+  visibility: hidden;
+  opacity: 0;
+	font-size: 30px;
+
+  /* transition effect. not necessary */
+  transition: opacity .5s, visibility .5s;
+}
+
+.relativeDiv:hover .img__description {
+  visibility: visible;
+  opacity: 1;
+}
